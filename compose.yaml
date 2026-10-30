@@ -1,0 +1,66 @@
+name: knowledgeos
+services:
+  postgres:
+    image: postgres:16.13-alpine
+    environment:
+      POSTGRES_DB: knowledgeos
+      POSTGRES_USER: knowledgeos
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-knowledgeos_local_demo}
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U knowledgeos -d knowledgeos']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+  qdrant:
+    image: qdrant/qdrant:v1.20.0
+    ports:
+      - '127.0.0.1:6333:6333'
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+  backend:
+    build: ./backend
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql+psycopg://knowledgeos:${POSTGRES_PASSWORD:-knowledgeos_local_demo}@postgres:5432/knowledgeos
+      QDRANT_URL: http://qdrant:6333
+      CORS_ORIGINS: '["http://localhost:8080","http://127.0.0.1:8080","http://localhost:5173","http://127.0.0.1:5173"]'
+      UPLOAD_DIR: /app/uploads
+      MODEL_CACHE_DIR: /app/model-cache
+    ports:
+      - '127.0.0.1:8000:8000'
+    volumes:
+      - uploads:/app/uploads
+      - model_cache:/app/model-cache
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+    healthcheck:
+      test: ['CMD', 'python', '-c', 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/api/readiness", timeout=10)']
+      interval: 15s
+      timeout: 12s
+      start_period: 180s
+      retries: 10
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    ports:
+      - '127.0.0.1:8080:80'
+    depends_on:
+      backend:
+        condition: service_started
+    restart: unless-stopped
+volumes:
+  postgres_data:
+  qdrant_data:
+  uploads:
+  model_cache:
