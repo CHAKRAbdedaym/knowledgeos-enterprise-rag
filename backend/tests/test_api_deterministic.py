@@ -138,3 +138,31 @@ def test_rate_limit_applies_and_health_stays_available(client, monkeypatch):
     assert response.status_code == 429
     assert response.headers["retry-after"] == "60"
     assert client.get("/api/health").status_code == 200
+
+
+def test_provider_failure_is_safe_and_does_not_invent_answer(client, monkeypatch):
+    upload(client)
+    conversation = client.post("/api/conversations", json={}).json()
+
+    def fail(*args):
+        raise ValueError("private provider body and secret")
+
+    monkeypatch.setattr("app.routes.answer", fail)
+    response = client.post(
+        f"/api/conversations/{conversation['id']}/messages", json={"question": "incident security commander", "score_threshold": 0.1}
+    )
+    assert response.status_code == 503
+    assert "secret" not in response.text and "private" not in response.text
+    assert client.get("/api/conversations/" + conversation["id"]).json()["messages"] == []
+    assert client.get("/api/analytics").json()["queries"] == 1
+
+
+def test_heading_title_and_stored_chunk_inspector(client):
+    document = upload(client, content=b"# Synthetic Security Policy\n\nNotify the incident commander.")
+    assert document["title"] == "Synthetic Security Policy"
+    assert document["page_count"] == 1
+    assert document["updated_at"]
+    detail = client.get("/api/documents/" + document["id"]).json()
+    assert detail["chunks"][0]["text"] == detail["text"]
+    result = client.post("/api/retrieval", json={"question": "incident commander", "score_threshold": 0}).json()
+    assert result["trace"]["question"] == "incident commander"
