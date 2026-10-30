@@ -156,7 +156,7 @@ def retrieve(question, top_k, threshold, vectors, settings):
         "latency_ms": elapsed,
         "retrieval_ms": elapsed,
         "provider": settings.llm_provider,
-        "model": settings.llm_model or None,
+        "model": (settings.llm_model or None) if settings.llm_provider != "none" else None,
         "top_k": top_k,
         "score_threshold": threshold,
         "matched_chunks": len(sources),

@@ -42,3 +42,17 @@ def test_embedding_normalization_preserves_original_input(monkeypatch):
     assert len(embeddings.embed_documents([source])[0]) == 384
     assert captured == ["Remote work policy"]
     assert source == "  Remote\n work\tpolicy  "
+
+
+def test_retrieval_only_trace_does_not_claim_a_configured_llm_was_used():
+    from app.retrieval import retrieve
+
+    class Vectors:
+        revision = "test-only"
+
+        def search(self, question, top_k, threshold):
+            return []
+
+    _, trace = retrieve("synthetic question", 5, 0.3, Vectors(), Settings(llm_model="configured-but-unused"))
+    assert trace["provider"] == "none"
+    assert trace["model"] is None

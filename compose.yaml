@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: knowledgeos
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-knowledgeos_local_demo}
     ports:
-      - '127.0.0.1:5432:5432'
+      - '127.0.0.1:${POSTGRES_PORT:-5433}:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -34,6 +34,7 @@ services:
       CORS_ORIGINS: '["http://localhost:8080","http://127.0.0.1:8080","http://localhost:5173","http://127.0.0.1:5173"]'
       UPLOAD_DIR: /app/uploads
       MODEL_CACHE_DIR: /app/model-cache
+      HF_HUB_DISABLE_XET: "1"
     ports:
       - '127.0.0.1:8000:8000'
     volumes:
