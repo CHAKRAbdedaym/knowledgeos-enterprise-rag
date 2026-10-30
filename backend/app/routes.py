@@ -381,7 +381,7 @@ def dashboard(db: Db):
         for d in documents[:8]
     ]
     return {
-        "documents": len(documents),
+        "documents": sum(d.status == "indexed" for d in documents),
         "chunks": db.scalar(select(func.count()).select_from(Chunk)),
         "conversations": db.scalar(select(func.count()).select_from(Conversation)),
         "queries": len(logs),

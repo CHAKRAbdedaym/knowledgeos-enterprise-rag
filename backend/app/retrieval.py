@@ -29,14 +29,20 @@ class LocalEmbeddings(Embeddings):
                 from fastembed import TextEmbedding
                 from huggingface_hub import snapshot_download
 
-                snapshot = snapshot_download(
-                    repo_id="Qdrant/all-MiniLM-L6-v2-onnx",
-                    revision="d13954661f83248295ba75c1ed411eef3b7b936e",
-                    cache_dir=str(self.settings.model_cache_dir),
-                    allow_patterns=["config.json", "tokenizer.json", "tokenizer_config.json", "special_tokens_map.json", "model.onnx"],
-                )
                 import pathlib
 
+                revision = "d13954661f83248295ba75c1ed411eef3b7b936e"
+                required_files = ["config.json", "tokenizer.json", "tokenizer_config.json", "special_tokens_map.json", "model.onnx"]
+                cached = self.settings.model_cache_dir / "models--Qdrant--all-MiniLM-L6-v2-onnx" / "snapshots" / revision
+                if all((cached / name).is_file() for name in required_files):
+                    snapshot = str(cached)
+                else:
+                    snapshot = snapshot_download(
+                        repo_id="Qdrant/all-MiniLM-L6-v2-onnx",
+                        revision=revision,
+                        cache_dir=str(self.settings.model_cache_dir),
+                        allow_patterns=required_files,
+                    )
                 artifact = pathlib.Path(snapshot) / "model.onnx"
                 digest = hashlib.sha256()
                 with artifact.open("rb") as stream:
@@ -51,7 +57,7 @@ class LocalEmbeddings(Embeddings):
         return self._model
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
-        return [v.tolist() for v in self.load().embed(texts, batch_size=32)]
+        return [v.tolist() for v in self.load().embed([" ".join(text.split()) for text in texts], batch_size=32)]
 
     def embed_query(self, text: str) -> list[float]:
         return self.embed_documents([text])[0]

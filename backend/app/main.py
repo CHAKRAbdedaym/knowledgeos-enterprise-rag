@@ -4,8 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.config import get_settings
+from app.logging_config import configure_logging
 from app.routes import app as router
 from app.security import http_error, validation_error, unexpected_error, limits
+
+configure_logging()
 
 app = FastAPI(title="KnowledgeOS API", version="1.0.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
 app.add_middleware(
