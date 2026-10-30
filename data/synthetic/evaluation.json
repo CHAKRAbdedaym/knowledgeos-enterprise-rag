@@ -1,0 +1,179 @@
+{
+  "description": "Authored ground truth for SYNTHETIC English corpus. Not measured results. Direct authoritative expected sources; FAQ duplicates may also match.",
+  "questions": [
+    {
+      "id": "q01",
+      "question": "How many people are in the fictional agency and what are its three teams?",
+      "expected_sources": [
+        "01_company.md"
+      ],
+      "expected_answer": "24 people; Delivery, Platform and Operations."
+    },
+    {
+      "id": "q02",
+      "question": "What are the three offers and how long does Discovery last?",
+      "expected_sources": [
+        "02_services.md"
+      ],
+      "expected_answer": "Discovery, Delivery Web, Knowledge Assist; two weeks."
+    },
+    {
+      "id": "q03",
+      "question": "What are the three onboarding follow-up milestones?",
+      "expected_sources": [
+        "03_onboarding.md"
+      ],
+      "expected_answer": "Day 7, day 30, day 60."
+    },
+    {
+      "id": "q04",
+      "question": "How far ahead should leave longer than five working days ideally be requested?",
+      "expected_sources": [
+        "05_leave_remote.md"
+      ],
+      "expected_answer": "Twenty working days."
+    },
+    {
+      "id": "q05",
+      "question": "After how many minutes should a managed workstation lock automatically?",
+      "expected_sources": [
+        "06_it.md"
+      ],
+      "expected_answer": "Five minutes."
+    },
+    {
+      "id": "q06",
+      "question": "What should happen when an access secret is exposed in a commit?",
+      "expected_sources": [
+        "07_security.md"
+      ],
+      "expected_answer": "Revoke and replace it; deleting the commit is insufficient."
+    },
+    {
+      "id": "q07",
+      "question": "How soon after stabilization must a SEV1 or SEV2 review occur?",
+      "expected_sources": [
+        "08_incidents.md"
+      ],
+      "expected_answer": "Within five working days."
+    },
+    {
+      "id": "q08",
+      "question": "How long is an iteration and on which day are project risks reviewed?",
+      "expected_sources": [
+        "09_project_management.md"
+      ],
+      "expected_answer": "Two weeks; Thursday."
+    },
+    {
+      "id": "q09",
+      "question": "How many approvals does a pull request require?",
+      "expected_sources": [
+        "10_code_review.md"
+      ],
+      "expected_answer": "At least one approval from another developer and all required CI checks passing."
+    },
+    {
+      "id": "q10",
+      "question": "Which HTTP status represents a business conflict in the business API conventions?",
+      "expected_sources": [
+        "11_api.md"
+      ],
+      "expected_answer": "409."
+    },
+    {
+      "id": "q11",
+      "question": "What are support coverage hours and the SEV1 first response target?",
+      "expected_sources": [
+        "12_sla.md"
+      ],
+      "expected_answer": "Monday–Friday 09:00–18:00 Paris excluding French public holidays; 30 business minutes."
+    },
+    {
+      "id": "q12",
+      "question": "How long are security logs retained?",
+      "expected_sources": [
+        "13_data_governance.md"
+      ],
+      "expected_answer": "180 days."
+    },
+    {
+      "id": "q13",
+      "question": "May Restricted data be sent to an external AI provider without authorization?",
+      "expected_sources": [
+        "14_ai_usage.md"
+      ],
+      "expected_answer": "No: explicit prior review and authorization are needed."
+    },
+    {
+      "id": "q14",
+      "question": "What is the annual learning allowance and how many planned training days are provided?",
+      "expected_sources": [
+        "15_training.md"
+      ],
+      "expected_answer": "600 euros per person per year and two days."
+    },
+    {
+      "id": "q15",
+      "question": "How long is standard stabilization after acceptance?",
+      "expected_sources": [
+        "16_project_lifecycle.md"
+      ],
+      "expected_answer": "Ten working days."
+    },
+    {
+      "id": "q16",
+      "question": "How long is the initial observation period after an ordinary release?",
+      "expected_sources": [
+        "18_releases.md"
+      ],
+      "expected_answer": "Thirty minutes."
+    },
+    {
+      "id": "q17",
+      "question": "Which Node and Python versions are in the fictional reference workstation?",
+      "expected_sources": [
+        "19_dev_setup.md"
+      ],
+      "expected_answer": "Node 22 and Python 3.12; project dependency files take precedence."
+    },
+    {
+      "id": "q18",
+      "question": "What are the indicative hotel and meal ceilings?",
+      "expected_sources": [
+        "20_travel.md"
+      ],
+      "expected_answer": "120 euros per night excluding breakfast; 25 euros per meal."
+    },
+    {
+      "id": "q19",
+      "question": "How do I make pancake batter for six people?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention."
+    },
+    {
+      "id": "q20",
+      "question": "What is the exact orbital period of Neptune?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention."
+    },
+    {
+      "id": "q21",
+      "question": "Who won the 2022 football World Cup final?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention."
+    },
+    {
+      "id": "q22",
+      "question": "What was the actual revenue of IAWEB.DEV in 2025?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention."
+    },
+    {
+      "id": "q23",
+      "question": "What is the individual salary of the real company director?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention."
+    }
+  ]
+}

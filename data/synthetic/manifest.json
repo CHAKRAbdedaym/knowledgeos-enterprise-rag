@@ -1,0 +1,226 @@
+{
+  "provenance": "SYNTHETIC portfolio reconstruction; no actual IAWEB.DEV materials",
+  "version": "1.0",
+  "documents": [
+    {
+      "filename": "01_company.md",
+      "title": "Company and organization",
+      "category": "company",
+      "tags": [
+        "organisation",
+        "contacts"
+      ],
+      "synthetic": true,
+      "word_count": 523
+    },
+    {
+      "filename": "02_services.md",
+      "title": "Service catalog",
+      "category": "delivery",
+      "tags": [
+        "offres",
+        "devis"
+      ],
+      "synthetic": true,
+      "word_count": 515
+    },
+    {
+      "filename": "03_onboarding.md",
+      "title": "Employee onboarding",
+      "category": "people",
+      "tags": [
+        "onboarding",
+        "acces"
+      ],
+      "synthetic": true,
+      "word_count": 509
+    },
+    {
+      "filename": "04_hr.md",
+      "title": "People practices and collaboration",
+      "category": "people",
+      "tags": [
+        "rh",
+        "organisation"
+      ],
+      "synthetic": true,
+      "word_count": 525
+    },
+    {
+      "filename": "05_leave_remote.md",
+      "title": "Leave, absence and remote work",
+      "category": "people",
+      "tags": [
+        "conges",
+        "teletravail"
+      ],
+      "synthetic": true,
+      "word_count": 532
+    },
+    {
+      "filename": "06_it.md",
+      "title": "IT support and access management",
+      "category": "platform",
+      "tags": [
+        "it",
+        "materiel"
+      ],
+      "synthetic": true,
+      "word_count": 522
+    },
+    {
+      "filename": "07_security.md",
+      "title": "Operational security policy",
+      "category": "security",
+      "tags": [
+        "mfa",
+        "secrets"
+      ],
+      "synthetic": true,
+      "word_count": 522
+    },
+    {
+      "filename": "08_incidents.md",
+      "title": "Incident management",
+      "category": "security",
+      "tags": [
+        "incident",
+        "escalade"
+      ],
+      "synthetic": true,
+      "word_count": 530
+    },
+    {
+      "filename": "09_project_management.md",
+      "title": "Project management and prioritization",
+      "category": "delivery",
+      "tags": [
+        "backlog",
+        "sprint"
+      ],
+      "synthetic": true,
+      "word_count": 522
+    },
+    {
+      "filename": "10_code_review.md",
+      "title": "Code review and quality",
+      "category": "engineering",
+      "tags": [
+        "pull-request",
+        "tests"
+      ],
+      "synthetic": true,
+      "word_count": 532
+    },
+    {
+      "filename": "11_api.md",
+      "title": "Business API conventions",
+      "category": "engineering",
+      "tags": [
+        "api",
+        "contrat"
+      ],
+      "synthetic": true,
+      "word_count": 523
+    },
+    {
+      "filename": "12_sla.md",
+      "title": "Service levels and support",
+      "category": "operations",
+      "tags": [
+        "sla",
+        "support"
+      ],
+      "synthetic": true,
+      "word_count": 529
+    },
+    {
+      "filename": "13_data_governance.md",
+      "title": "Data governance and retention",
+      "category": "governance",
+      "tags": [
+        "classification",
+        "retention"
+      ],
+      "synthetic": true,
+      "word_count": 540
+    },
+    {
+      "filename": "14_ai_usage.md",
+      "title": "Responsible use of AI assistants",
+      "category": "governance",
+      "tags": [
+        "ia",
+        "prompts"
+      ],
+      "synthetic": true,
+      "word_count": 531
+    },
+    {
+      "filename": "15_training.md",
+      "title": "Training and knowledge sharing",
+      "category": "people",
+      "tags": [
+        "formation",
+        "budget"
+      ],
+      "synthetic": true,
+      "word_count": 531
+    },
+    {
+      "filename": "16_project_lifecycle.md",
+      "title": "Project lifecycle and acceptance",
+      "category": "delivery",
+      "tags": [
+        "recette",
+        "cloture"
+      ],
+      "synthetic": true,
+      "word_count": 525
+    },
+    {
+      "filename": "17_faq.md",
+      "title": "Operational frequently asked questions",
+      "category": "operations",
+      "tags": [
+        "faq",
+        "orientation"
+      ],
+      "synthetic": true,
+      "word_count": 545
+    },
+    {
+      "filename": "18_releases.md",
+      "title": "Release and version management",
+      "category": "engineering",
+      "tags": [
+        "release",
+        "rollback"
+      ],
+      "synthetic": true,
+      "word_count": 530
+    },
+    {
+      "filename": "19_dev_setup.md",
+      "title": "Reference development environment",
+      "category": "engineering",
+      "tags": [
+        "installation",
+        "local"
+      ],
+      "synthetic": true,
+      "word_count": 529
+    },
+    {
+      "filename": "20_travel.md",
+      "title": "Business travel and expenses",
+      "category": "operations",
+      "tags": [
+        "voyage",
+        "frais"
+      ],
+      "synthetic": true,
+      "word_count": 536
+    }
+  ]
+}
