@@ -1,0 +1,26 @@
+{
+  "executed_at": "2026-10-30T19:20:18.038080+00:00",
+  "api_url": "http://localhost:8000/api",
+  "passed_checks": [
+    "Real PostgreSQL and Qdrant readiness",
+    "Seeded corpus contains at least 20 documents",
+    "Dashboard reports persisted corpus and chunks",
+    "Sanitized configuration omits API key",
+    "Conversation rename persists",
+    "Supported corpus question retrieves traceable citations",
+    "Unsupported question abstains",
+    "Conversation history persists on independent GET",
+    "New upload is genuinely indexed",
+    "Qdrant contains the uploaded document vectors",
+    "Content duplicate rejected with 409",
+    "Unsupported file rejected",
+    "New content is retrieved with its original source ID",
+    "Document preview returns extracted text",
+    "Reindex does not duplicate vector entries",
+    "Delete removes vector entries",
+    "Delete removes document metadata",
+    "Analytics increments for actual queries",
+    "Analytics has real timing and source references"
+  ],
+  "scope": "Real local Docker stack; no live external LLM invocation"
+}

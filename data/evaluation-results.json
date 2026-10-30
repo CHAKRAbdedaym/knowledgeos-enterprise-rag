@@ -1,0 +1,741 @@
+{
+  "executed_at": "2026-10-30T19:20:23.002208+00:00",
+  "api_url": "http://localhost:8000/api",
+  "top_k": 5,
+  "score_threshold": 0.3,
+  "dataset": "data/synthetic/evaluation.json",
+  "supported_questions": 18,
+  "mean_document_recall_at_k": 0.9444444444444444,
+  "no_answer_questions": 5,
+  "no_answer_abstention_rate": 0.6,
+  "interpretation": "Measured retrieval only, document-level recall over authored sources; not answer correctness. Similarity threshold may return unrelated passages for unsupported questions.",
+  "results": [
+    {
+      "id": "q01",
+      "question": "How many people are in the fictional agency and what are its three teams?",
+      "expected_sources": [
+        "01_company.md"
+      ],
+      "expected_answer": "24 people; Delivery, Platform and Operations.",
+      "retrieved_sources": [
+        "01_company.md",
+        "04_hr.md"
+      ],
+      "source_scores": [
+        0.412479,
+        0.343596,
+        0.318403
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "How many people are in the fictional agency and what are its three teams?",
+        "latency_ms": 11,
+        "retrieval_ms": 11,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 3,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q02",
+      "question": "What are the three offers and how long does Discovery last?",
+      "expected_sources": [
+        "02_services.md"
+      ],
+      "expected_answer": "Discovery, Delivery Web, Knowledge Assist; two weeks.",
+      "retrieved_sources": [
+        "02_services.md",
+        "15_training.md",
+        "16_project_lifecycle.md"
+      ],
+      "source_scores": [
+        0.461425,
+        0.396844,
+        0.338222,
+        0.325009
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "What are the three offers and how long does Discovery last?",
+        "latency_ms": 13,
+        "retrieval_ms": 13,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 4,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q03",
+      "question": "What are the three onboarding follow-up milestones?",
+      "expected_sources": [
+        "03_onboarding.md"
+      ],
+      "expected_answer": "Day 7, day 30, day 60.",
+      "retrieved_sources": [
+        "03_onboarding.md",
+        "09_project_management.md",
+        "16_project_lifecycle.md"
+      ],
+      "source_scores": [
+        0.459348,
+        0.437334,
+        0.427622,
+        0.405448,
+        0.392003
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "What are the three onboarding follow-up milestones?",
+        "latency_ms": 24,
+        "retrieval_ms": 24,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q04",
+      "question": "How far ahead should leave longer than five working days ideally be requested?",
+      "expected_sources": [
+        "05_leave_remote.md"
+      ],
+      "expected_answer": "Twenty working days.",
+      "retrieved_sources": [
+        "01_company.md",
+        "05_leave_remote.md",
+        "15_training.md"
+      ],
+      "source_scores": [
+        0.646329,
+        0.47502,
+        0.465242,
+        0.432855,
+        0.405405
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "How far ahead should leave longer than five working days ideally be requested?",
+        "latency_ms": 15,
+        "retrieval_ms": 15,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q05",
+      "question": "After how many minutes should a managed workstation lock automatically?",
+      "expected_sources": [
+        "06_it.md"
+      ],
+      "expected_answer": "Five minutes.",
+      "retrieved_sources": [
+        "01_company.md",
+        "03_onboarding.md",
+        "05_leave_remote.md",
+        "06_it.md",
+        "07_security.md"
+      ],
+      "source_scores": [
+        0.384485,
+        0.341702,
+        0.334716,
+        0.309865,
+        0.306977
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "After how many minutes should a managed workstation lock automatically?",
+        "latency_ms": 48,
+        "retrieval_ms": 48,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q06",
+      "question": "What should happen when an access secret is exposed in a commit?",
+      "expected_sources": [
+        "07_security.md"
+      ],
+      "expected_answer": "Revoke and replace it; deleting the commit is insufficient.",
+      "retrieved_sources": [
+        "03_onboarding.md",
+        "07_security.md",
+        "08_incidents.md"
+      ],
+      "source_scores": [
+        0.507448,
+        0.428643,
+        0.394506,
+        0.386668,
+        0.360567
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "What should happen when an access secret is exposed in a commit?",
+        "latency_ms": 23,
+        "retrieval_ms": 23,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q07",
+      "question": "How soon after stabilization must a SEV1 or SEV2 review occur?",
+      "expected_sources": [
+        "08_incidents.md"
+      ],
+      "expected_answer": "Within five working days.",
+      "retrieved_sources": [
+        "08_incidents.md",
+        "12_sla.md"
+      ],
+      "source_scores": [
+        0.720565,
+        0.549922,
+        0.497201,
+        0.450258,
+        0.440247
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "How soon after stabilization must a SEV1 or SEV2 review occur?",
+        "latency_ms": 18,
+        "retrieval_ms": 18,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q08",
+      "question": "How long is an iteration and on which day are project risks reviewed?",
+      "expected_sources": [
+        "09_project_management.md"
+      ],
+      "expected_answer": "Two weeks; Thursday.",
+      "retrieved_sources": [
+        "01_company.md",
+        "09_project_management.md",
+        "12_sla.md",
+        "16_project_lifecycle.md"
+      ],
+      "source_scores": [
+        0.622439,
+        0.519974,
+        0.512815,
+        0.488479,
+        0.481191
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "How long is an iteration and on which day are project risks reviewed?",
+        "latency_ms": 18,
+        "retrieval_ms": 18,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q09",
+      "question": "How many approvals does a pull request require?",
+      "expected_sources": [
+        "10_code_review.md"
+      ],
+      "expected_answer": "At least one approval from another developer and all required CI checks passing.",
+      "retrieved_sources": [
+        "02_services.md",
+        "04_hr.md",
+        "09_project_management.md",
+        "10_code_review.md",
+        "15_training.md"
+      ],
+      "source_scores": [
+        0.463494,
+        0.416954,
+        0.398641,
+        0.393024,
+        0.386471
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "How many approvals does a pull request require?",
+        "latency_ms": 12,
+        "retrieval_ms": 12,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q10",
+      "question": "Which HTTP status represents a business conflict in the business API conventions?",
+      "expected_sources": [
+        "11_api.md"
+      ],
+      "expected_answer": "409.",
+      "retrieved_sources": [
+        "01_company.md",
+        "06_it.md",
+        "11_api.md"
+      ],
+      "source_scores": [
+        0.466793,
+        0.387326,
+        0.37834,
+        0.376904,
+        0.371262
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "Which HTTP status represents a business conflict in the business API conventions?",
+        "latency_ms": 17,
+        "retrieval_ms": 17,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q11",
+      "question": "What are support coverage hours and the SEV1 first response target?",
+      "expected_sources": [
+        "12_sla.md"
+      ],
+      "expected_answer": "Monday–Friday 09:00–18:00 Paris excluding French public holidays; 30 business minutes.",
+      "retrieved_sources": [
+        "08_incidents.md",
+        "12_sla.md"
+      ],
+      "source_scores": [
+        0.658713,
+        0.644163,
+        0.537693,
+        0.529723,
+        0.514841
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "What are support coverage hours and the SEV1 first response target?",
+        "latency_ms": 17,
+        "retrieval_ms": 17,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q12",
+      "question": "How long are security logs retained?",
+      "expected_sources": [
+        "13_data_governance.md"
+      ],
+      "expected_answer": "180 days.",
+      "retrieved_sources": [
+        "06_it.md",
+        "08_incidents.md",
+        "13_data_governance.md",
+        "16_project_lifecycle.md"
+      ],
+      "source_scores": [
+        0.639981,
+        0.402734,
+        0.346142,
+        0.341432,
+        0.333765
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "How long are security logs retained?",
+        "latency_ms": 13,
+        "retrieval_ms": 13,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q13",
+      "question": "May Restricted data be sent to an external AI provider without authorization?",
+      "expected_sources": [
+        "14_ai_usage.md"
+      ],
+      "expected_answer": "No: explicit prior review and authorization are needed.",
+      "retrieved_sources": [
+        "07_security.md",
+        "13_data_governance.md",
+        "14_ai_usage.md",
+        "17_faq.md"
+      ],
+      "source_scores": [
+        0.437744,
+        0.341765,
+        0.336039,
+        0.335419,
+        0.314014
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "May Restricted data be sent to an external AI provider without authorization?",
+        "latency_ms": 27,
+        "retrieval_ms": 27,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q14",
+      "question": "What is the annual learning allowance and how many planned training days are provided?",
+      "expected_sources": [
+        "15_training.md"
+      ],
+      "expected_answer": "600 euros per person per year and two days.",
+      "retrieved_sources": [
+        "04_hr.md",
+        "15_training.md",
+        "16_project_lifecycle.md"
+      ],
+      "source_scores": [
+        0.693332,
+        0.588637,
+        0.526461,
+        0.454065,
+        0.332015
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "What is the annual learning allowance and how many planned training days are provided?",
+        "latency_ms": 27,
+        "retrieval_ms": 27,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q15",
+      "question": "How long is standard stabilization after acceptance?",
+      "expected_sources": [
+        "16_project_lifecycle.md"
+      ],
+      "expected_answer": "Ten working days.",
+      "retrieved_sources": [
+        "02_services.md",
+        "12_sla.md",
+        "16_project_lifecycle.md"
+      ],
+      "source_scores": [
+        0.48205,
+        0.475058,
+        0.460268,
+        0.423711,
+        0.411742
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "How long is standard stabilization after acceptance?",
+        "latency_ms": 15,
+        "retrieval_ms": 15,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q16",
+      "question": "How long is the initial observation period after an ordinary release?",
+      "expected_sources": [
+        "18_releases.md"
+      ],
+      "expected_answer": "Thirty minutes.",
+      "retrieved_sources": [
+        "05_leave_remote.md",
+        "12_sla.md"
+      ],
+      "source_scores": [
+        0.348746,
+        0.327395,
+        0.311604,
+        0.304219
+      ],
+      "recall": 0.0,
+      "abstained": false,
+      "trace": {
+        "question": "How long is the initial observation period after an ordinary release?",
+        "latency_ms": 16,
+        "retrieval_ms": 16,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 4,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q17",
+      "question": "Which Node and Python versions are in the fictional reference workstation?",
+      "expected_sources": [
+        "19_dev_setup.md"
+      ],
+      "expected_answer": "Node 22 and Python 3.12; project dependency files take precedence.",
+      "retrieved_sources": [
+        "19_dev_setup.md"
+      ],
+      "source_scores": [
+        0.497684
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "Which Node and Python versions are in the fictional reference workstation?",
+        "latency_ms": 55,
+        "retrieval_ms": 55,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 1,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q18",
+      "question": "What are the indicative hotel and meal ceilings?",
+      "expected_sources": [
+        "20_travel.md"
+      ],
+      "expected_answer": "120 euros per night excluding breakfast; 25 euros per meal.",
+      "retrieved_sources": [
+        "20_travel.md"
+      ],
+      "source_scores": [
+        0.661297
+      ],
+      "recall": 1.0,
+      "abstained": false,
+      "trace": {
+        "question": "What are the indicative hotel and meal ceilings?",
+        "latency_ms": 51,
+        "retrieval_ms": 51,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 1,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q19",
+      "question": "How do I make pancake batter for six people?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention.",
+      "retrieved_sources": [],
+      "source_scores": [],
+      "recall": null,
+      "abstained": true,
+      "trace": {
+        "question": "How do I make pancake batter for six people?",
+        "latency_ms": 14,
+        "retrieval_ms": 14,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 0,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q20",
+      "question": "What is the exact orbital period of Neptune?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention.",
+      "retrieved_sources": [],
+      "source_scores": [],
+      "recall": null,
+      "abstained": true,
+      "trace": {
+        "question": "What is the exact orbital period of Neptune?",
+        "latency_ms": 17,
+        "retrieval_ms": 17,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 0,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q21",
+      "question": "Who won the 2022 football World Cup final?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention.",
+      "retrieved_sources": [],
+      "source_scores": [],
+      "recall": null,
+      "abstained": true,
+      "trace": {
+        "question": "Who won the 2022 football World Cup final?",
+        "latency_ms": 20,
+        "retrieval_ms": 20,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 0,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q22",
+      "question": "What was the actual revenue of IAWEB.DEV in 2025?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention.",
+      "retrieved_sources": [
+        "01_company.md",
+        "02_services.md",
+        "10_code_review.md",
+        "16_project_lifecycle.md",
+        "18_releases.md"
+      ],
+      "source_scores": [
+        0.544925,
+        0.351941,
+        0.332772,
+        0.315016,
+        0.314442
+      ],
+      "recall": null,
+      "abstained": false,
+      "trace": {
+        "question": "What was the actual revenue of IAWEB.DEV in 2025?",
+        "latency_ms": 20,
+        "retrieval_ms": 20,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 5,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    },
+    {
+      "id": "q23",
+      "question": "What is the individual salary of the real company director?",
+      "expected_sources": [],
+      "expected_answer": "Information absent from corpus; abstain without invention.",
+      "retrieved_sources": [
+        "04_hr.md",
+        "17_faq.md"
+      ],
+      "source_scores": [
+        0.363956,
+        0.343048
+      ],
+      "recall": null,
+      "abstained": false,
+      "trace": {
+        "question": "What is the individual salary of the real company director?",
+        "latency_ms": 37,
+        "retrieval_ms": 37,
+        "provider": "none",
+        "model": null,
+        "top_k": 5,
+        "score_threshold": 0.3,
+        "matched_chunks": 2,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "embedding_revision": "sha256:bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"
+      }
+    }
+  ]
+}

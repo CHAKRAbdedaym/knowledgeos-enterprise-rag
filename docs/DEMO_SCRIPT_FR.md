@@ -88,15 +88,15 @@ Dans Research, poser la question du télétravail, vérifier le badge **Grounded
 
 ## Captures et preuves
 
-Les emplacements suivants sont des **captures à produire après vérification par l’intégrateur**. Ce sont des placeholders documentaires, pas des captures existantes et pas des preuves de réussite. Remplacer la ligne uniquement lorsque le fichier correspondant a réellement été créé; conserver la date et le mode de l’environnement.
+Les captures suivantes ont été produites depuis l’application réellement exécutée le 30 octobre 2026, en mode retrieval-only. Elles servent de repli visuel; les compteurs reflètent les véritables requêtes de démonstration et de test.
 
-| Vue | Capture attendue | Statut |
-| --- | --- | --- |
-| Overview `/` | Compteurs et provenance synthétique | À produire par l’intégrateur |
-| Knowledge Base `/documents` | Liste réelle et aperçu de fichier | À produire par l’intégrateur |
-| Research `/research` | Question, mode et panneau source | À produire par l’intégrateur |
-| Intelligence `/analytics` | Mesures enregistrées et période | À produire par l’intégrateur |
-| Architecture `/architecture` | Pipeline et diagnostic réel | À produire par l’intégrateur |
-| Settings `/settings` | Santé, readiness et fournisseur | À produire par l’intégrateur |
+| Vue | Capture réelle |
+| --- | --- |
+| Overview `/` | [Vue bureau](screenshots/overview-desktop.png) · [mobile](screenshots/overview-mobile.png) · [thème sombre](screenshots/overview-dark.png) |
+| Knowledge Base `/documents` | [Documents indexés](screenshots/knowledge-base.png) |
+| Research `/research` | [Extraits et citations](screenshots/research-citations.png) · [preuve exacte](screenshots/source-evidence.png) |
+| Intelligence `/analytics` | [Mesures enregistrées](screenshots/analytics.png) |
+| Architecture `/architecture` | [Pipeline réel](screenshots/architecture.png) |
+| Settings `/settings` | [Configuration et santé](screenshots/settings.png) |
 
 Les captures éventuelles ne remplacent pas le rapport d’exécution. Pour annoncer des résultats chiffrés, consulter la preuve datée et préciser corpus, top-k, seuil et mode fournisseur.
