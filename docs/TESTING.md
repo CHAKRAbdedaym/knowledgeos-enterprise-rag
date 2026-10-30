@@ -92,3 +92,7 @@ An initial real-Qdrant test run during concurrent image builds failed the artifa
 - Initial model/dependency downloads required network access. The verified model cache was reused for container testing; this does not independently prove cold downloads on every network.
 - A separate independent fresh-clone run was not performed; the Docker builds executed the tracked dependency installation/build steps and initial schema migration was tested.
 - GitHub Actions is configured but cannot be claimed to have run remotely before this repository is published.
+
+## Floating assistant follow-up
+
+Added the bottom-right assistant on every route, using the same persisted conversation and RAG endpoints. Frontend lint, typecheck, formatting and production build passed; the component suite now passes eight tests, including quick-chat retry and handoff into Research. The dedicated real-browser scenario passed against the rebuilt Docker frontend: source inspection, keyboard focus/Escape, reload persistence, Research handoff, new-chat reset, 390px mobile bounds and zero captured console errors. Screenshots: [desktop assistant](screenshots/floating-assistant-desktop.png), [mobile assistant](screenshots/floating-assistant-mobile.png). The browser fixture removes its own test conversation afterward; its real query event remains in analytics.

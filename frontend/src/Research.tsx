@@ -43,7 +43,11 @@ export default function Research() {
   const location = useLocation();
   const navigate = useNavigate();
   const client = useQueryClient();
-  const [id, setId] = useState<string | null>(null);
+  const [id, setId] = useState<string | null>(
+    () =>
+      (location.state as { conversationId?: string } | null)?.conversationId ??
+      null,
+  );
   const [draft, setDraft] = useState(
     ((location.state as { question?: string } | null)?.question || '').slice(
       0,
@@ -84,7 +88,11 @@ export default function Research() {
     queryFn: () => api<Config>('/config'),
   });
   useEffect(() => {
-    const state = location.state as { question?: string } | null;
+    const state = location.state as {
+      question?: string;
+      conversationId?: string;
+    } | null;
+    if (state?.conversationId) setId(state.conversationId);
     if (state?.question) setDraft(state.question.slice(0, 2000));
     if (state) navigate(location.pathname, { replace: true, state: null });
   }, [location, navigate]);

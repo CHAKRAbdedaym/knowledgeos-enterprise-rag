@@ -14,6 +14,7 @@
 - A live dashboard backed by stored documents, chunks, conversations and executed queries.
 - Real PDF, Markdown and TXT upload → extraction → chunking → local embeddings → Qdrant indexing.
 - A persistent research workspace with conversation create/rename/delete, cited passages, source inspection and retrieval traces.
+- A bottom-right quick-chat assistant on every page: ask without leaving your workspace, inspect cited passages, and continue the saved conversation in Research.
 - Honest **retrieval-only** operation without a paid key; optional OpenAI or Ollama answer generation with a bounded grounding prompt.
 - Searchable and filterable document grid/list, extracted text preview, duplicate protection, reindexing and vector cleanup.
 - Recorded query volume, latency, retrieved chunk counts and source references. No invented accuracy, cost savings or benchmark claims.

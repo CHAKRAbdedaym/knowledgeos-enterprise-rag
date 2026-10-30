@@ -29,6 +29,7 @@ import {
 import { AnimatePresence, motion } from 'motion/react';
 import { api, type Config, type Health } from './api';
 import { Badge, Button, Crumb, Loading, Modal } from './components/ui';
+import FloatingAssistant from './components/FloatingAssistant';
 const Overview = lazy(() => import('./Overview'));
 const Documents = lazy(() => import('./Documents'));
 const Research = lazy(() => import('./Research'));
@@ -271,6 +272,7 @@ export default function App() {
           </span>
         </footer>
       </div>
+      <FloatingAssistant />
       <Modal
         open={help}
         onOpenChange={setHelp}

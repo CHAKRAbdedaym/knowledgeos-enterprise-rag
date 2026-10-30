@@ -230,6 +230,98 @@ describe('workspace interactions', () => {
       screen.getByRole('button', { name: 'Upload & index' }),
     ).toBeDisabled();
   });
+  it('asks from the floating assistant, preserves the chat and opens it in Research', async () => {
+    const user = userEvent.setup();
+    mount('/documents');
+    await user.click(
+      screen.getByRole('button', { name: 'Open knowledge assistant' }),
+    );
+    let panel = screen.getByRole('dialog', { name: 'Knowledge assistant' });
+    await user.type(
+      within(panel).getByLabelText('Quick chat question'),
+      'What is the remote policy?',
+    );
+    await user.click(
+      within(panel).getByRole('button', { name: 'Send quick chat question' }),
+    );
+    expect(
+      await within(panel).findByText('Retrieved remote work policy.'),
+    ).toBeInTheDocument();
+    expect(within(panel).getByText('Retrieval only')).toBeInTheDocument();
+    expect(within(panel).getByText('Cited passages')).toBeInTheDocument();
+    await user.click(within(panel).getByText('Source 1 · Remote work guide'));
+    expect(panel.querySelector('details')).toHaveAttribute('open');
+    expect(localStorage.getItem('knowledgeos-quick-chat-id')).toBe('conv-1');
+    await user.click(
+      within(panel).getByRole('button', { name: 'Minimize assistant' }),
+    );
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    await user.click(
+      screen.getByRole('button', { name: 'Open knowledge assistant' }),
+    );
+    panel = screen.getByRole('dialog', { name: 'Knowledge assistant' });
+    expect(
+      await within(panel).findByText('Retrieved remote work policy.'),
+    ).toBeInTheDocument();
+    await user.click(
+      within(panel).getByRole('button', { name: 'Open chat in Research' }),
+    );
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(
+      await screen.findByText('Retrieved remote work policy.'),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByLabelText('Research question'),
+    ).toBeInTheDocument();
+  });
+  it('keeps a failed quick-chat question and retries without creating a second conversation', async () => {
+    const user = userEvent.setup();
+    const originalFetch = fetch;
+    let attempts = 0;
+    let creates = 0;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+        if (String(input) === '/api/conversations' && init?.method === 'POST')
+          creates++;
+        if (String(input).endsWith('/conv-1/messages') && attempts++ === 0) {
+          return new Response(
+            JSON.stringify({ detail: 'Provider temporarily unavailable' }),
+            { status: 503 },
+          );
+        }
+        return originalFetch(input, init);
+      }),
+    );
+    mount('/documents');
+    await user.click(
+      screen.getByRole('button', { name: 'Open knowledge assistant' }),
+    );
+    const panel = screen.getByRole('dialog', { name: 'Knowledge assistant' });
+    await user.type(
+      within(panel).getByLabelText('Quick chat question'),
+      'Can I work remotely?',
+    );
+    await user.click(
+      within(panel).getByRole('button', { name: 'Send quick chat question' }),
+    );
+    expect(
+      await within(panel).findByText('Provider temporarily unavailable'),
+    ).toBeInTheDocument();
+    expect(within(panel).getByLabelText('Quick chat question')).toHaveValue(
+      'Can I work remotely?',
+    );
+    await user.click(
+      within(panel).getByRole('button', { name: 'Retry question' }),
+    );
+    await waitFor(() =>
+      expect(within(panel).getByLabelText('Quick chat question')).toHaveValue(
+        '',
+      ),
+    );
+    expect(creates).toBe(1);
+    expect(attempts).toBe(2);
+  });
   it('shows API failures without inventing documents', async () => {
     vi.stubGlobal(
       'fetch',
