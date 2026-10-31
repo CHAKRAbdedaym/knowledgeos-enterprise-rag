@@ -102,11 +102,14 @@ export default function App() {
         />
       )}
       <aside className={`sidebar ${mobile ? 'sidebar-open' : ''}`}>
-        <NavLink to="/" className="brand">
-          <img src="/logo.svg" width="34" height="34" alt="" />
-          <span>
-            Knowledge<span className="brand-os">OS</span>
-            <small>ENTERPRISE INTELLIGENCE</small>
+        <NavLink
+          to="/"
+          className="brand"
+          aria-label="IAWEB · KnowledgeOS overview"
+        >
+          <img src="/iaweb-logo.svg" width="180" height="46" alt="IAWEB" />
+          <span className="brand-product">
+            KnowledgeOS <span>PORTFOLIO DEMO</span>
           </span>
         </NavLink>
         <button
@@ -115,7 +118,7 @@ export default function App() {
         >
           <span className="workspace-avatar">K</span>
           <span>
-            IAWEB.DEV workspace<small>Local environment</small>
+            Knowledge workspace<small>Synthetic company data</small>
           </span>
           <ChevronDown size={14} />
         </button>
@@ -189,6 +192,13 @@ export default function App() {
           >
             <Menu size={21} />
           </button>
+          <NavLink
+            to="/"
+            className="mobile-brand"
+            aria-label="IAWEB · KnowledgeOS overview"
+          >
+            <img src="/iaweb-logo.svg" width="112" height="29" alt="IAWEB" />
+          </NavLink>
           <Crumb label={current} />
           <div className="topbar-actions">
             <button className="search-trigger" onClick={() => setSearch(true)}>
@@ -282,8 +292,10 @@ export default function App() {
         <div className="modal-body guide">
           <p>
             KnowledgeOS is a synthetic enterprise RAG portfolio reconstruction.
-            The company, documents, and workspace identity are illustrative.
-            Counts, searches, citations, and system status come from the running
+            The company policies, documents, and employee identities are
+            fictional. The IAWEB.DEV logo is a visual reference; this is an
+            independent demo, not an official IAWEB.DEV application. Counts,
+            searches, citations, and system status come from the running
             application.
           </p>
           <div>

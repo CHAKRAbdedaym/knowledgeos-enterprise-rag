@@ -62,7 +62,7 @@ export default function Overview() {
     <>
       <PageHeading
         eyebrow="YOUR KNOWLEDGE, CONNECTED"
-        title="Good questions start here."
+        title="Your knowledge, made intelligent."
         description="One place to explore your company’s knowledge. Every answer, connected to its source."
         action={
           <Button
@@ -112,9 +112,9 @@ export default function Overview() {
             YOUR RESEARCH COMPANION
           </Badge>
           <h2>
-            A world of knowledge.
+            Where knowledge
             <br />
-            <span>A clearer way to find it.</span>
+            <span>meets intelligence.</span>
           </h2>
           <p>
             Bring your questions. Discover the context, connections,
@@ -159,11 +159,11 @@ export default function Overview() {
           <div className="node-line line-two" />
           <div className="node-line line-three" />
           <div className="knowledge-core">
-            <img src="/logo.svg" alt="" />
+            <img src="/iaweb-logo.svg" alt="" />
             <span>
-              Connected
+              KnowledgeOS
               <br />
-              knowledge
+              Connected knowledge
             </span>
           </div>
           <div className="knowledge-node node-left">
@@ -321,12 +321,12 @@ export default function Overview() {
                             >
                               <stop
                                 offset="0%"
-                                stopColor="#7772e7"
+                                stopColor="var(--indigo)"
                                 stopOpacity={0.25}
                               />
                               <stop
                                 offset="100%"
-                                stopColor="#7772e7"
+                                stopColor="var(--indigo)"
                                 stopOpacity={0}
                               />
                             </linearGradient>
@@ -360,7 +360,7 @@ export default function Overview() {
                             type="monotone"
                             dataKey="count"
                             name="Questions"
-                            stroke="#7772e7"
+                            stroke="var(--indigo)"
                             strokeWidth={2.5}
                             fill="url(#activityFill)"
                           />

@@ -7,6 +7,8 @@
 
 > **Synthetic portfolio reconstruction.** This project is inspired by an enterprise RAG internship experience at IAWEB.DEV. It is an independently reconstructed demonstration, **not an actual deployed client system**. All included company policies, knowledge documents, organizational details and identities are fictional. They are not authentic IAWEB.DEV internal materials.
 
+The interface references IAWEB.DEV’s blue/navy visual language and displays its public logo at the project owner’s request. The logo remains a third-party mark, excluded from this project’s MIT license; see [asset attribution](THIRD_PARTY_NOTICES.md). KnowledgeOS is an independent portfolio demo.
+
 ![KnowledgeOS overview, captured from the running application](docs/screenshots/overview-desktop.png)
 
 ## What you can demonstrate
@@ -26,7 +28,7 @@
 | Layer | Choice | Why |
 |---|---|---|
 | UI | React + TypeScript + Vite | Typed reusable components and fast local development |
-| UI system | Tailwind, locally owned shadcn/ui + Radix primitives, Lucide, Inter, Motion | Accessible interaction foundations and a consistent visual language |
+| UI system | Tailwind, locally owned shadcn/ui + Radix primitives, Lucide, Inter, Space Grotesk, Motion | Accessible interaction foundations and a consistent visual language |
 | Data/navigation | TanStack Query, React Router | Explicit asynchronous state and navigable workspaces |
 | Charts | Recharts | Charts derived directly from real API data |
 | API | Python 3.13, FastAPI, Pydantic | Validated contracts and generated OpenAPI |

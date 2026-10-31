@@ -4,27 +4,27 @@
 
 The primary task is finding inspectable evidence in a small knowledge base. Overview introduces the workspace and its real counts. Research connects a question to a conversation and sources. Knowledge Base manages the actual indexed documents. Intelligence reports observed usage. Architecture and Settings explain implementation and current configuration.
 
-The shared shell uses a fixed graphite sidebar on desktop, a quiet white topbar, a persistent synthetic-demo notice and a lightly tinted work surface. Mobile navigation becomes a dismissible drawer. A command dialog provides keyboard navigation between sections. Source and document inspection use focus-managed dialogs rather than a separate hidden application.
+The shared shell uses a white sidebar with the public IAWEB.DEV wordmark, electric-blue active navigation, a white topbar, a persistent synthetic-demo notice and a pale blue work surface. The KnowledgeOS product label remains underneath the wordmark. Mobile navigation becomes a dismissible drawer, with the wordmark visible in the mobile topbar. A command dialog provides keyboard navigation between sections. Source and document inspection use focus-managed dialogs rather than a separate hidden application. The application-wide visual layer lives in `frontend/src/brand.css`.
 
 ## Tokens
 
 | Token | Light value | Purpose |
 |---|---|---|
-| Canvas | `#f7f8fa` | Main work surface |
+| Canvas | `#f5f7fc` | Main work surface |
 | Panel | `#ffffff` | Tables, cards, dialogs |
-| Sidebar | `#1d202c` | Stable navigation anchor |
-| Text | `#303342` | Primary content |
-| Heading | `#242735` | Titles and hierarchy |
-| Muted | `#687184` | Secondary readable copy |
-| Border | `#e9eaf0` | Quiet separation |
-| Indigo | `#6965db` | Research actions and focus |
-| Soft indigo | `#f0effd` | Selected state and icon backing |
+| Sidebar | `#ffffff` | Navigation and wordmark |
+| Text | `#343d53` | Primary content |
+| Heading | `#151d38` | Navy titles and hierarchy |
+| Muted | `#626c82` | Secondary readable copy |
+| Border | `#e1e7f1` | Quiet separation |
+| Accent (legacy `--indigo` token) | `#2458ff` | Research actions, selection and focus |
+| Soft accent | `#eaf0ff` | Notices and icon backing |
 
 Dark mode swaps canvas, panels, text, borders and accent variables; it is persisted in browser preferences. Colors carry meaning alongside text/icons, not alone. Charts use a coordinated muted category palette and tooltips with exact stored counts.
 
-Inter is self-hosted through a legitimate Fontsource package, avoiding runtime font-CDN requests. Headings use restrained weight and tight tracking. Body text is about 14px, navigation about 13px, and most supporting copy at least 11px. Decorative brand lettering is smaller; it is not the only accessible product label.
+Inter body text and Space Grotesk headings are self-hosted through Fontsource, avoiding runtime font-CDN requests. Headings use bold weight and tight tracking, with a larger blue/navy dashboard hero. Body text is about 14px, navigation about 13px, and most supporting copy at least 11px. Decorative brand lettering is smaller; it is not the only accessible product label.
 
-Spacing follows an approximately 4px rhythm: small control gaps, 16–24px panel spacing and about 32px desktop work-area padding. Borders are generally 1px; corners are 6–10px, with larger rounded illustration forms only in the research hero. Shadows are subtle and communicate elevation rather than decorate every surface.
+Spacing follows an approximately 4px rhythm: small control gaps, 16–24px panel spacing and about 32px desktop work-area padding. Borders are generally 1px; primary cards use 16px corners, the hero uses 24px, and action buttons/navigation use pill shapes. Shadows are subtle and communicate elevation.
 
 ## Reusable patterns
 
@@ -50,4 +50,4 @@ Screenshots under `docs/screenshots/` are captured from the actual running UI. T
 
 ## Floating assistant visual reference
 
-The floating chat follows the visual language observed on [IAWEB.DEV](https://iaweb.dev/): electric blue `#2458FF`, ink navy `#151D38`, white surfaces, Space Grotesk headings and pill-shaped controls. These tokens are scoped to the widget, with accessible dark-theme variants. Space Grotesk is self-hosted through Fontsource under OFL-1.1. The header retains the KnowledgeOS identity and the synthetic-demo notice; the redesign does not imply this is IAWEB.DEV’s official customer service.
+The floating chat shares the application’s visual reference from [IAWEB.DEV](https://iaweb.dev/): electric blue `#2458FF`, ink navy `#151D38`, white surfaces, Space Grotesk headings and pill-shaped controls. Its navy header retains the KnowledgeOS identity and the synthetic-demo notice. Dark mode uses light blue accents and navy surfaces; the original logo is displayed on a white backing for legibility. Space Grotesk is self-hosted through Fontsource under OFL-1.1. Logo provenance is documented in [third-party notices](../THIRD_PARTY_NOTICES.md); this is not IAWEB.DEV’s official customer service.

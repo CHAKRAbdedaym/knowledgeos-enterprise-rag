@@ -3,8 +3,6 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import '@fontsource/space-grotesk/latin-500.css';
-import '@fontsource/space-grotesk/latin-700.css';
 import {
   ArrowUpRight,
   BookOpen,

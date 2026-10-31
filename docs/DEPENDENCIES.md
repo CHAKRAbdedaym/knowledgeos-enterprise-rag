@@ -16,7 +16,7 @@ Dependencies come from PyPI, npm and official Docker image repositories; no down
 | psycopg / binary distribution | PostgreSQL driver | LGPL-3.0 and bundled library notices |
 | pytest | Test runner | MIT |
 
-Consult installed distribution notices for exact versions and transitive licenses before redistributing a binary product. The repository contains no vendored commercial documents or brand image downloads. The logo is original SVG code. IAWEB.DEV is a context label for a fictional reconstructed dataset, not an endorsement.
+Consult installed distribution notices for exact versions and transitive licenses before redistributing a binary product. The KnowledgeOS application icon is original SVG code. The requested IAWEB.DEV wordmark is an unmodified third-party asset downloaded from the public site; its source and exclusion from the project’s MIT license are recorded in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). The included company knowledge remains fictional; the visual reference does not imply endorsement or an official deployment.
 
 Implementation references checked during development:
 

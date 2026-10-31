@@ -51,7 +51,7 @@ import {
   SectionTitle,
   Spinner,
 } from './components/ui';
-const colors = ['#7772e7', '#a7a2ee', '#8cb5cf', '#a3c8b9', '#d3bba0'];
+const colors = ['var(--indigo)', '#6c91ff', '#43aac4', '#6eab9c', '#c8a46c'];
 export function AnalyticsPage() {
   const [days, setDays] = useState(7);
   const query = useQuery({
@@ -144,12 +144,12 @@ export function AnalyticsPage() {
                         >
                           <stop
                             offset="0%"
-                            stopColor="#7772e7"
+                            stopColor="var(--indigo)"
                             stopOpacity={0.2}
                           />
                           <stop
                             offset="100%"
-                            stopColor="#7772e7"
+                            stopColor="var(--indigo)"
                             stopOpacity={0}
                           />
                         </linearGradient>
@@ -189,7 +189,7 @@ export function AnalyticsPage() {
                         dataKey="count"
                         name="Questions"
                         type="monotone"
-                        stroke="#7772e7"
+                        stroke="var(--indigo)"
                         fill="url(#analyticsFill)"
                         strokeWidth={2.5}
                       />

@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: { sans: ['Inter', 'sans-serif'] },
-      colors: { indigo: { 550: '#6965e8' } },
+      colors: { indigo: { 550: '#2458ff' } },
     },
   },
   plugins: [],

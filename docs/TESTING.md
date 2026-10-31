@@ -100,3 +100,14 @@ Added the bottom-right assistant on every route, using the same persisted conver
 ### IAWEB-inspired visual update
 
 After the widget restyle, frontend lint, TypeScript checks, all eight component tests and the production build passed again. The frontend Docker image was rebuilt and deployed locally. `CHROME_PATH=/usr/bin/google-chrome npx playwright test e2e/floating-assistant.spec.ts` passed against that running image, covering the same real retrieval and conversation lifecycle at desktop and mobile widths. A separate Chromium check verified the dark-theme panel fits a 768 × 1024 tablet viewport with no JavaScript page errors. Visual inspection caught a pre-existing root canvas color that stayed light in dark mode; the canvas and default text now use their theme tokens. The [welcome panel](screenshots/floating-assistant-welcome.png) and [dark tablet panel](screenshots/floating-assistant-dark-tablet.png) were captured from the running application and visually inspected. No backend behavior changed in this visual update; the backend suite was not rerun for it.
+
+### Application-wide IAWEB visual update (2026-10-31)
+
+The public IAWEB logo now appears in the desktop sidebar, mobile header and dashboard illustration. Shared styling covers all routes, with white/blue navigation, Space Grotesk headings, blue charts, rounded controls and navy dark-theme surfaces. The original logo’s source and rights are recorded in `THIRD_PARTY_NOTICES.md`.
+
+- `npm run lint`, `npm run typecheck` and formatting checks passed.
+- `npm run test`: all eight tests passed. The initial run hit the existing five-second settings-test timeout while a separate browser preview was running; the isolated full-suite rerun passed without changing test timeouts or assertions.
+- `docker compose build frontend` passed, including TypeScript and the Vite production build. The frontend was recreated with `docker compose up -d --no-deps frontend`.
+- `CHROME_PATH=/usr/bin/google-chrome npx playwright test e2e/workspace.spec.ts e2e/floating-assistant.spec.ts`: two tests passed against port 8080. These exercised upload, reindex, deletion, real retrieval/citations, unsupported-question abstention, conversation reload, floating-chat handoff, all six routes at 768px and 390px, theme persistence and captured console errors.
+- Additional Chromium inspection confirmed the original SVG loads on desktop and mobile, headings use Space Grotesk, active navigation is `#2458ff`, mobile navigation opens/closes, and dark-theme canvas/text resolve to the intended contrasting colors. The backdrop check clicks its exposed area outside the drawer; an initial center click was correctly intercepted by the open drawer.
+- Current overview, document, research and assistant screenshots were recaptured from the rebuilt container. No backend code changed, so backend tests were not rerun for this update.
