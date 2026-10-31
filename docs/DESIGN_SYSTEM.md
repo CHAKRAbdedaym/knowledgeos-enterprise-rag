@@ -47,3 +47,7 @@ Responsive verification should include 1440px desktop, 768px tablet and 390px mo
 ## Visual evidence
 
 Screenshots under `docs/screenshots/` are captured from the actual running UI. They are not fabricated mockups. Their counts reflect seeding and real demonstration/test requests at capture time. See TESTING.md for the executed viewport checks and remaining accessibility coverage gaps.
+
+## Floating assistant visual reference
+
+The floating chat follows the visual language observed on [IAWEB.DEV](https://iaweb.dev/): electric blue `#2458FF`, ink navy `#151D38`, white surfaces, Space Grotesk headings and pill-shaped controls. These tokens are scoped to the widget, with accessible dark-theme variants. Space Grotesk is self-hosted through Fontsource under OFL-1.1. The header retains the KnowledgeOS identity and the synthetic-demo notice; the redesign does not imply this is IAWEB.DEV’s official customer service.

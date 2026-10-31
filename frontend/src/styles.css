@@ -4,8 +4,8 @@
 :root {
   font-family: Inter, sans-serif;
   font-size: 14px;
-  color: #303342;
-  background: #f7f8fa;
+  color: var(--text);
+  background: var(--canvas);
   font-synthesis: none;
   --canvas: #f7f8fa;
   --panel: #fff;
@@ -5496,37 +5496,48 @@ label small {
   color: #bbaccd;
 }
 
-/* A persistent, evidence-backed assistant available from every workspace. */
+/* IAWEB.DEV reference: electric blue, ink navy, Space Grotesk and pill controls.
+   Scoped to the KnowledgeOS assistant; this remains a synthetic portfolio demo. */
 .assistant-launcher {
   position: fixed;
   right: max(24px, env(safe-area-inset-right));
   bottom: max(24px, env(safe-area-inset-bottom));
   z-index: 55;
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   display: grid;
   place-items: center;
-  border-radius: 20px;
-  background: #6965db;
-  color: white;
+  border: 1px solid #ffffff40;
+  border-radius: 50%;
+  background: #2458ff;
+  color: #fff;
   box-shadow:
-    0 8px 28px #34306b40,
-    inset 0 0 0 1px #ffffff20;
+    0 8px 28px #151d3833,
+    0 0 0 6px #2458ff0b;
   transition:
-    background 0.15s,
-    transform 0.15s;
+    background 0.18s,
+    transform 0.18s,
+    box-shadow 0.18s;
 }
 .assistant-launcher:hover {
-  background: #5752c4;
+  background: #1948df;
   transform: translateY(-2px);
+  box-shadow:
+    0 10px 30px #2458ff40,
+    0 0 0 8px #2458ff0c;
+}
+.assistant-launcher:focus-visible {
+  outline: 3px solid #2458ff;
+  outline-offset: 5px;
 }
 .assistant-launcher-label {
   position: absolute;
-  right: 70px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: var(--heading);
-  color: var(--panel);
+  right: 74px;
+  padding: 10px 15px;
+  border-radius: 30px;
+  background: #151d38;
+  color: #fff;
+  font-family: 'Space Grotesk', Inter, sans-serif;
   font-size: 12px;
   white-space: nowrap;
   pointer-events: none;
@@ -5538,171 +5549,320 @@ label small {
   opacity: 1;
 }
 .assistant-panel {
+  --panel: #fff;
+  --text: #151d38;
+  --heading: #151d38;
+  --muted: #696f80;
+  --border: #e4e8f1;
+  --soft: #f5f7fc;
+  --indigo: #2458ff;
+  --indigo-soft: #edf2ff;
   position: fixed;
   z-index: 56;
   right: max(24px, env(safe-area-inset-right));
-  bottom: calc(max(24px, env(safe-area-inset-bottom)) + 72px);
-  width: min(410px, calc(100vw - 32px));
-  height: min(620px, calc(100dvh - 120px));
+  bottom: calc(max(24px, env(safe-area-inset-bottom)) + 76px);
+  width: min(414px, calc(100vw - 32px));
+  height: min(660px, calc(100dvh - 124px));
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: 0 16px 65px #171b3030;
   color: var(--text);
+  border: 1px solid #151d3815;
+  border-radius: 24px;
+  box-shadow:
+    0 24px 80px #151d3838,
+    0 3px 16px #151d3810;
   outline: none;
+}
+.dark .assistant-panel {
+  --panel: #151d38;
+  --text: #e9efff;
+  --heading: #f4f7ff;
+  --muted: #aebbd6;
+  --border: #2d3958;
+  --soft: #1c2745;
+  --indigo: #8aa8ff;
+  --indigo-soft: #24365d;
+  border-color: #39445f;
+  box-shadow: 0 24px 80px #0006;
 }
 .assistant-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 17px 14px;
-  border-bottom: 1px solid var(--border);
+  gap: 11px;
+  padding: 22px 18px;
+  background:
+    radial-gradient(ellipse at 15% 130%, #2458ff60, transparent 65%), #151d38;
+  color: #fff;
+  border-bottom: 1px solid #ffffff0d;
+}
+.assistant-brand-mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 41px;
+  height: 41px;
+  border-radius: 50%;
+  background: #2458ff;
+  border: 1px solid #ffffff25;
+  color: #fff;
+  box-shadow: 0 0 24px #2458ff35;
 }
 .assistant-header > div:first-of-type {
   min-width: 0;
   flex: 1;
 }
+.assistant-brand-name {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #a8bcff;
+}
 .assistant-header h2 {
-  font-size: 14px;
-  letter-spacing: -0.2px;
+  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.4px;
+  color: #fff;
+  margin-top: 3px;
 }
 .assistant-header p {
-  font-size: 11px;
-  color: var(--muted);
+  font-size: 10px;
+  color: #b5c2dd;
   margin-top: 3px;
 }
 .assistant-header-actions {
   display: flex;
-  gap: 1px;
+  gap: 2px;
+  align-items: center;
 }
 .assistant-header-actions button {
-  min-width: 30px;
-  min-height: 34px;
+  color: #d4ddf2;
+  min-width: 29px;
+  min-height: 32px;
+  border-radius: 50%;
+}
+.assistant-header-actions button:hover {
+  color: #fff;
+  background: #ffffff16;
+}
+.assistant-panel button:focus-visible {
+  outline-color: var(--indigo);
+}
+.assistant-header-actions button:focus-visible {
+  outline-color: #a8bcff;
 }
 .assistant-mode {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 10px 16px;
-  background: var(--soft);
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
   font-size: 10px;
   color: var(--muted);
 }
 .assistant-mode .badge {
+  border: 0;
+  border-radius: 24px;
+  padding: 5px 9px;
   font-size: 10px;
+  background: var(--indigo-soft);
+  color: var(--indigo);
+  gap: 6px;
+}
+.assistant-mode-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
 }
 .assistant-scroll {
-  padding: 20px 16px;
+  padding: 22px 20px;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #c8d1e5 transparent;
 }
 .assistant-welcome {
-  padding: 10px 0;
+  position: relative;
+  padding: 8px 0 6px;
 }
-.assistant-welcome-icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: var(--indigo-soft);
+.assistant-eyebrow {
+  position: relative;
+  display: block;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1.15px;
   color: var(--indigo);
-  margin-bottom: 18px;
+  margin: 3px 0 18px;
 }
 .assistant-welcome h3 {
-  font-size: 21px;
-  letter-spacing: -0.6px;
+  position: relative;
+  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: -1.4px;
+  line-height: 1.12;
+  color: var(--heading);
 }
-.assistant-welcome p {
-  font-size: 13px;
+.assistant-welcome h3 > span {
+  color: var(--indigo);
+}
+.assistant-welcome > p {
+  position: relative;
+  font-size: 12px;
   color: var(--muted);
-  margin: 8px 0 22px;
+  line-height: 1.7;
+  margin: 13px 0 30px;
+  max-width: 260px;
+}
+.assistant-welcome-art {
+  position: absolute;
+  right: -9px;
+  top: 15px;
+  width: 116px;
+  height: 116px;
+  color: #2458ff15;
+  background: radial-gradient(circle, #2458ff0c, transparent 72%);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.assistant-welcome-art i {
+  position: absolute;
+  width: 102px;
+  height: 102px;
+  border: 1px solid #2458ff0d;
+  border-radius: 50%;
+  transform: rotate(-35deg) scaleX(0.6);
+}
+.assistant-welcome-art i:last-child {
+  transform: rotate(35deg) scaleX(0.6);
+}
+.assistant-suggestions-label {
+  font-size: 9px;
+  letter-spacing: 1.1px;
+  color: var(--muted);
+  margin-bottom: 11px;
 }
 .assistant-welcome > button {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
   text-align: left;
-  padding: 13px 12px;
+  padding: 9px 9px 9px 14px;
   border: 1px solid var(--border);
-  border-radius: 9px;
-  margin-top: 8px;
+  border-radius: 30px;
+  margin-top: 9px;
   font-size: 12px;
-  background: var(--soft);
+  min-height: 50px;
+  background: var(--panel);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 .assistant-welcome > button:hover {
   border-color: var(--indigo);
+  background: var(--soft);
 }
-.assistant-welcome > button svg {
+.assistant-question-number {
+  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-size: 10px;
+  color: var(--muted);
+}
+.assistant-question-arrow {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
   flex: none;
+  border-radius: 50%;
+  background: var(--indigo-soft);
   color: var(--indigo);
+  margin-left: auto;
 }
 .assistant-messages {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 .assistant-message {
   min-width: 0;
   overflow-wrap: anywhere;
 }
 .assistant-message-user {
-  background: var(--indigo-soft);
-  padding: 12px 14px;
-  border-radius: 12px 12px 3px 12px;
-  margin-left: 24px;
+  background: #2458ff;
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 18px 18px 4px 18px;
+  margin-left: 26px;
 }
 .assistant-byline {
-  font-size: 11px;
-  font-weight: 600;
+  font-family: 'Space Grotesk', Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--heading);
-  margin-bottom: 8px;
+  margin-bottom: 9px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 .assistant-byline span {
-  color: var(--indigo);
+  font-family: Inter, sans-serif;
+  font-size: 10px;
   font-weight: 400;
+  color: var(--indigo);
+  background: var(--indigo-soft);
+  border-radius: 20px;
+  padding: 3px 7px;
+}
+.assistant-message-user .assistant-byline {
+  color: #d9e4ff;
+  font-size: 10px;
 }
 .assistant-panel .markdown {
   font-size: 13px;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 .assistant-panel .markdown p {
   margin-bottom: 6px;
 }
+.assistant-message-user .markdown,
+.assistant-message-user .markdown h1,
+.assistant-message-user .markdown h2,
+.assistant-message-user .markdown h3,
+.assistant-message-user .markdown a {
+  color: #fff;
+}
 .assistant-excerpt {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   background: var(--soft);
   border-left: 2px solid var(--indigo);
-  padding: 12px;
+  border-radius: 0 10px 10px 0;
+  padding: 14px;
   font-size: 12px;
-  line-height: 1.7;
+  line-height: 1.75;
   white-space: pre-wrap;
 }
 .assistant-sources {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 .assistant-sources details {
   border: 1px solid var(--border);
-  border-radius: 7px;
-  margin-top: 6px;
+  border-radius: 12px;
+  margin-top: 7px;
   font-size: 11px;
 }
 .assistant-sources summary {
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 9px;
+  gap: 8px;
+  padding: 11px;
   cursor: pointer;
   color: var(--indigo);
 }
@@ -5711,6 +5871,7 @@ label small {
 }
 .assistant-sources summary:hover {
   background: var(--soft);
+  border-radius: 12px;
 }
 .assistant-sources summary:focus-visible {
   outline: 2px solid var(--indigo);
@@ -5732,11 +5893,15 @@ label small {
   margin-top: 15px;
 }
 .assistant-pending > p {
-  padding: 10px 12px;
-  background: var(--indigo-soft);
-  border-radius: 8px;
-  margin-bottom: 15px;
+  padding: 14px;
+  background: #2458ff;
+  color: #fff;
+  border-radius: 16px 16px 4px 16px;
+  margin: 0 0 18px 26px;
   overflow-wrap: anywhere;
+}
+.assistant-pending .loading {
+  color: var(--indigo);
 }
 .assistant-error {
   margin-top: 16px;
@@ -5745,78 +5910,117 @@ label small {
 }
 .assistant-error .button {
   margin-top: 8px;
+  border-radius: 28px;
 }
 .assistant-composer {
   border-top: 1px solid var(--border);
-  padding: 12px 14px;
+  padding: 15px 18px 13px;
   background: var(--panel);
 }
 .assistant-input {
   display: flex;
   align-items: flex-end;
-  padding: 6px;
+  padding: 7px;
   gap: 5px;
   border: 1px solid var(--border);
-  border-radius: 11px;
+  border-radius: 24px;
+  background: var(--soft);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 .assistant-input:focus-within {
-  border-color: var(--indigo);
-  box-shadow: 0 0 0 2px var(--indigo-soft);
+  border-color: #2458ff;
+  box-shadow: 0 0 0 3px #2458ff0c;
 }
 .assistant-input textarea {
-  padding: 7px;
+  padding: 7px 8px;
   border: 0;
+  background: transparent;
+  color: var(--text);
   border-radius: 0;
   resize: none;
   width: 100%;
   min-width: 0;
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.5;
   max-height: 120px;
   box-shadow: none;
+}
+.assistant-input textarea::placeholder {
+  color: var(--muted);
 }
 .assistant-input > button {
   display: grid;
   place-items: center;
-  background: #6965db;
-  color: white;
-  border-radius: 8px;
-  width: 36px;
-  height: 36px;
+  background: #2458ff;
+  color: #fff;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
   flex: none;
 }
+.assistant-input > button:hover:not(:disabled) {
+  background: #1948df;
+}
+.assistant-input > button:disabled {
+  opacity: 1;
+  background: #dbe4fc;
+  color: #5c78b9;
+}
+.dark .assistant-input > button:disabled {
+  background: #293b67;
+  color: #a0b5e5;
+}
 .assistant-composer > p {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--muted);
   text-align: center;
-  margin-top: 9px;
+  margin-top: 11px;
 }
 @media (max-width: 520px) {
   .assistant-launcher {
     right: 16px;
     bottom: max(16px, env(safe-area-inset-bottom));
-    width: 52px;
-    height: 52px;
-    border-radius: 17px;
+    width: 54px;
+    height: 54px;
   }
   .assistant-panel {
     right: 12px;
     width: calc(100vw - 24px);
-    bottom: calc(max(16px, env(safe-area-inset-bottom)) + 64px);
-    height: min(620px, calc(100dvh - 96px));
+    bottom: calc(max(16px, env(safe-area-inset-bottom)) + 68px);
+    height: min(660px, calc(100dvh - 102px));
+    border-radius: 22px;
   }
   .assistant-header {
-    gap: 8px;
-    padding: 14px 12px;
+    gap: 9px;
+    padding: 17px 14px;
   }
-  .assistant-header > img {
-    width: 28px;
-    height: 28px;
+  .assistant-brand-mark {
+    width: 34px;
+    height: 34px;
   }
   .assistant-header h2 {
-    font-size: 13px;
+    font-size: 14px;
   }
   .assistant-header p {
     font-size: 10px;
+  }
+  .assistant-brand-name {
+    font-size: 8px;
+  }
+  .assistant-header-actions button {
+    min-width: 27px;
+    min-height: 32px;
+  }
+  .assistant-scroll {
+    padding: 20px 17px;
+  }
+  .assistant-welcome h3 {
+    font-size: 30px;
+  }
+  .assistant-mode {
+    padding: 11px 17px;
   }
   .assistant-launcher-label {
     display: none;
@@ -5824,7 +6028,9 @@ label small {
 }
 @media (prefers-reduced-motion: reduce) {
   .assistant-launcher,
-  .assistant-launcher-label {
+  .assistant-launcher-label,
+  .assistant-welcome > button,
+  .assistant-input {
     transition: none;
   }
 }

@@ -3,10 +3,13 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import '@fontsource/space-grotesk/latin-500.css';
+import '@fontsource/space-grotesk/latin-700.css';
 import {
   ArrowUpRight,
   BookOpen,
   MessageCircle,
+  Network,
   Plus,
   Send,
   X,
@@ -144,7 +147,9 @@ export default function FloatingAssistant() {
         }
       >
         {open ? <X size={24} /> : <MessageCircle size={26} />}
-        <span className="assistant-launcher-label">Ask KnowledgeOS</span>
+        <span className="assistant-launcher-label">
+          {open ? 'Minimize chat' : 'Ask KnowledgeOS'}
+        </span>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Content
@@ -155,11 +160,14 @@ export default function FloatingAssistant() {
           }}
         >
           <header className="assistant-header">
-            <img src="/logo.svg" alt="" width={34} height={34} />
+            <span className="assistant-brand-mark" aria-hidden="true">
+              <Network size={23} strokeWidth={1.6} />
+            </span>
             <div>
+              <span className="assistant-brand-name">KnowledgeOS</span>
               <Dialog.Title>Knowledge assistant</Dialog.Title>
               <Dialog.Description>
-                Ask your documents, from anywhere.
+                Your knowledge, connected.
               </Dialog.Description>
             </div>
             <div className="assistant-header-actions">
@@ -195,25 +203,41 @@ export default function FloatingAssistant() {
             </div>
           </header>
           <div className="assistant-mode">
-            <Badge tone="purple">{mode}</Badge>
+            <Badge tone="purple">
+              <span className="assistant-mode-dot" aria-hidden="true" />
+              {mode}
+            </Badge>
             <span>Synthetic demo workspace</span>
           </div>
           <div className="assistant-scroll" ref={scroll}>
             {!id && (
               <div className="assistant-welcome">
-                <span className="assistant-welcome-icon">
-                  <BookOpen size={24} />
+                <div className="assistant-welcome-art" aria-hidden="true">
+                  <Network size={42} strokeWidth={1.1} />
+                  <i />
+                  <i />
+                </div>
+                <span className="assistant-eyebrow">
+                  INFORMATION MEETS INTELLIGENCE
                 </span>
-                <h3>A quick question?</h3>
-                <p>
-                  Find answers and supporting passages in your knowledge base.
-                </p>
+                <h3>
+                  Your knowledge.
+                  <br />
+                  <span>One conversation.</span>
+                </h3>
+                <p>Ask a question. Find the passage behind the answer.</p>
+                <div className="assistant-suggestions-label">
+                  WHERE SHALL WE START?
+                </div>
                 <button
                   onClick={() => submit('What is the remote work policy?')}
                   disabled={send.isPending}
                 >
-                  What is the remote work policy?
-                  <ArrowUpRight size={14} />
+                  <span className="assistant-question-number">01</span>
+                  <span>What is the remote work policy?</span>
+                  <span className="assistant-question-arrow">
+                    <ArrowUpRight size={15} />
+                  </span>
                 </button>
                 <button
                   onClick={() =>
@@ -221,8 +245,11 @@ export default function FloatingAssistant() {
                   }
                   disabled={send.isPending}
                 >
-                  How do we report a security incident?
-                  <ArrowUpRight size={14} />
+                  <span className="assistant-question-number">02</span>
+                  <span>How do we report a security incident?</span>
+                  <span className="assistant-question-arrow">
+                    <ArrowUpRight size={15} />
+                  </span>
                 </button>
               </div>
             )}

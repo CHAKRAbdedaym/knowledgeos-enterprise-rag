@@ -24,6 +24,10 @@ test('quick chat retrieves sources, survives reload, and expands into Research',
     await expect(
       panel.getByRole('textbox', { name: 'Quick chat question', exact: true }),
     ).toBeFocused();
+    await page.screenshot({
+      path: '../docs/screenshots/floating-assistant-welcome.png',
+      fullPage: true,
+    });
     await panel
       .getByRole('textbox', { name: 'Quick chat question', exact: true })
       .fill('How many remote-work days are allowed per week?');
@@ -79,7 +83,11 @@ test('quick chat retrieves sources, survives reload, and expands into Research',
       fullPage: true,
     });
     await panel.getByRole('button', { name: 'Start a new quick chat' }).click();
-    await expect(panel.getByText('A quick question?')).toBeVisible();
+    await expect(
+      panel.getByRole('heading', {
+        name: /Your knowledge\..*One conversation\./,
+      }),
+    ).toBeVisible();
     expect(
       await page.evaluate(() =>
         localStorage.getItem('knowledgeos-quick-chat-id'),

@@ -6,7 +6,7 @@ Dependencies come from PyPI, npm and official Docker image repositories; no down
 |---|---|---|
 | React, Vite, Tailwind, Radix/shadcn patterns, Motion, TanStack Query, Recharts | Application UI | MIT |
 | Lucide | Icons | ISC |
-| Inter through @fontsource/inter | Self-hosted font | SIL OFL 1.1 |
+| Inter and Space Grotesk through Fontsource | Self-hosted fonts | SIL OFL 1.1 |
 | FastAPI, SQLAlchemy, Alembic, Pydantic, HTTPX | API/persistence/validation | MIT |
 | LangChain Core and langchain-qdrant | Document/embedding interfaces and vector adapter | MIT |
 | Qdrant, FastEmbed, ONNX Runtime | Vector storage and CPU embedding execution | Apache-2.0 / Apache-2.0 / MIT |
