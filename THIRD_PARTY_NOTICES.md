@@ -4,6 +4,8 @@
 
 `frontend/public/iaweb-logo.svg` is the unmodified SVG wordmark served by the public [IAWEB.DEV website](https://iaweb.dev/).
 
+`frontend/public/iaweb-icon.svg` uses the symbol paths from that wordmark, with the lettering removed and a white rounded backing added for legibility at small sizes. It is used for the browser favicon, chat launcher and research assistant avatars. The symbol’s original geometry and colors are retained. This derivative has the same third-party rights limitations as the source logo.
+
 - Source: https://iaweb.dev/wp-content/uploads/2025/10/Frame-1261156058.svg
 - Retrieved: 2026-10-31.
 - The mark belongs to its respective rights holder. No open-source license for this asset was identified; the repository’s MIT license does **not** apply to it and grants no trademark rights.

@@ -300,7 +300,7 @@ export default function Research() {
           {!id && !pendingQuestion ? (
             <div className="research-welcome">
               <div className="welcome-symbol">
-                <img src="/logo.svg" width="46" height="46" alt="" />
+                <img src="/iaweb-icon.svg" width="46" height="46" alt="" />
                 <span />
                 <span />
               </div>
@@ -351,7 +351,12 @@ export default function Research() {
                       {message.role === 'user' ? (
                         'DE'
                       ) : (
-                        <img src="/logo.svg" width="28" height="28" alt="" />
+                        <img
+                          src="/iaweb-icon.svg"
+                          width="28"
+                          height="28"
+                          alt=""
+                        />
                       )}
                     </div>
                     <div className="message-body">
@@ -479,7 +484,12 @@ export default function Research() {
                   )}
                   <div className="message message-assistant">
                     <div className="message-avatar">
-                      <img src="/logo.svg" width="28" height="28" alt="" />
+                      <img
+                        src="/iaweb-icon.svg"
+                        width="28"
+                        height="28"
+                        alt=""
+                      />
                     </div>
                     <div className="message-body">
                       <div className="message-byline">KnowledgeOS</div>

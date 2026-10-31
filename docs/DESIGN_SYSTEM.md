@@ -51,3 +51,5 @@ Screenshots under `docs/screenshots/` are captured from the actual running UI. T
 ## Floating assistant visual reference
 
 The floating chat shares the application’s visual reference from [IAWEB.DEV](https://iaweb.dev/): electric blue `#2458FF`, ink navy `#151D38`, white surfaces, Space Grotesk headings and pill-shaped controls. Its navy header retains the KnowledgeOS identity and the synthetic-demo notice. Dark mode uses light blue accents and navy surfaces; the original logo is displayed on a white backing for legibility. Space Grotesk is self-hosted through Fontsource under OFL-1.1. Logo provenance is documented in [third-party notices](../THIRD_PARTY_NOTICES.md); this is not IAWEB.DEV’s official customer service.
+
+The chat header displays the full IAWEB wordmark. The browser tab, floating launcher and Research assistant avatars use a compact symbol extracted from the same SVG, preserving its geometry and colors. A white rounded backing keeps the navy symbol legible in both themes. The launcher retains its accessible open/close label and switches to a close icon while the panel is open.

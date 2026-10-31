@@ -3,15 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import {
-  ArrowUpRight,
-  BookOpen,
-  MessageCircle,
-  Network,
-  Plus,
-  Send,
-  X,
-} from 'lucide-react';
+import { ArrowUpRight, BookOpen, Plus, Send, X } from 'lucide-react';
 import {
   api,
   messageError,
@@ -144,7 +136,11 @@ export default function FloatingAssistant() {
           open ? 'Close knowledge assistant' : 'Open knowledge assistant'
         }
       >
-        {open ? <X size={24} /> : <MessageCircle size={26} />}
+        {open ? (
+          <X size={24} />
+        ) : (
+          <img src="/iaweb-icon.svg" width={38} height={38} alt="" />
+        )}
         <span className="assistant-launcher-label">
           {open ? 'Minimize chat' : 'Ask KnowledgeOS'}
         </span>
@@ -158,8 +154,8 @@ export default function FloatingAssistant() {
           }}
         >
           <header className="assistant-header">
-            <span className="assistant-brand-mark" aria-hidden="true">
-              <Network size={23} strokeWidth={1.6} />
+            <span className="assistant-brand-mark">
+              <img src="/iaweb-logo.svg" width={72} height={19} alt="IAWEB" />
             </span>
             <div>
               <span className="assistant-brand-name">KnowledgeOS</span>
@@ -211,7 +207,7 @@ export default function FloatingAssistant() {
             {!id && (
               <div className="assistant-welcome">
                 <div className="assistant-welcome-art" aria-hidden="true">
-                  <Network size={42} strokeWidth={1.1} />
+                  <img src="/iaweb-icon.svg" width={44} height={44} alt="" />
                   <i />
                   <i />
                 </div>

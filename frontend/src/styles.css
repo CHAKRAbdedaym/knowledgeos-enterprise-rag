@@ -5526,6 +5526,12 @@ label small {
     0 10px 30px #2458ff40,
     0 0 0 8px #2458ff0c;
 }
+.assistant-launcher > img {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: 7px;
+}
 .assistant-launcher:focus-visible {
   outline: 3px solid #2458ff;
   outline-offset: 5px;
@@ -5601,13 +5607,18 @@ label small {
   display: grid;
   place-items: center;
   flex: none;
-  width: 41px;
-  height: 41px;
-  border-radius: 50%;
-  background: #2458ff;
+  width: 84px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff;
   border: 1px solid #ffffff25;
   color: #fff;
   box-shadow: 0 0 24px #2458ff35;
+}
+.assistant-brand-mark img {
+  display: block;
+  width: 72px;
+  height: auto;
 }
 .assistant-header > div:first-of-type {
   min-width: 0;
@@ -5739,6 +5750,9 @@ label small {
   border: 1px solid #2458ff0d;
   border-radius: 50%;
   transform: rotate(-35deg) scaleX(0.6);
+}
+.assistant-welcome-art > img {
+  opacity: 0.12;
 }
 .assistant-welcome-art i:last-child {
   transform: rotate(35deg) scaleX(0.6);
@@ -5997,8 +6011,11 @@ label small {
     padding: 17px 14px;
   }
   .assistant-brand-mark {
-    width: 34px;
+    width: 74px;
     height: 34px;
+  }
+  .assistant-brand-mark img {
+    width: 64px;
   }
   .assistant-header h2 {
     font-size: 14px;
