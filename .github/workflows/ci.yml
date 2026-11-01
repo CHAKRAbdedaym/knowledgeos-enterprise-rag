@@ -16,7 +16,7 @@ jobs:
           POSTGRES_DB: knowledgeos
         ports: ['5432:5432']
         options: >-
-          --health-cmd 'pg_isready -U knowledgeos'
+          --health-cmd "pg_isready -U knowledgeos -d knowledgeos"
           --health-interval 5s --health-timeout 5s --health-retries 10
       qdrant:
         image: qdrant/qdrant:v1.20.0
