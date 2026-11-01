@@ -1,6 +1,7 @@
 <div align="center">
   <img src="frontend/public/logo.svg" width="64" alt="KnowledgeOS logo" />
   <h1>KnowledgeOS</h1>
+  <p>Portfolio by <a href="https://github.com/CHAKRAbdedaym">CHAKRAbdedaym</a></p>
   <p><strong>Enterprise AI Knowledge Intelligence</strong></p>
   <p>A complete document-to-evidence workspace: local embeddings, real vector retrieval, inspectable citations and optional grounded generation.</p>
 </div>
@@ -189,6 +190,8 @@ npm run dev
 Vite proxies `/api` to `localhost:8000`. Run the seed script from the repository root. Do not run the local API and container API on port 8000 simultaneously.
 
 ## Corpus, questions and evaluation
+
+For a ready-to-use HR frontend walkthrough, see [test.md](test.md): French instructions, English prompts, expected source documents and missing-information checks.
 
 `data/synthetic/` contains twenty explicitly labeled fictional policies covering company operations, onboarding, HR, leave, remote work, IT, security, incidents, engineering, API development, support, governance, AI, training, delivery, releases, setup and travel. The manifest declares categories and tags; no actual employee data is included.
 
