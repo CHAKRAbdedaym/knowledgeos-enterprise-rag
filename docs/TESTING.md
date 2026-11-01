@@ -91,7 +91,7 @@ An initial real-Qdrant test run during concurrent image builds failed the artifa
 - No authentication, tenant isolation, production backup restore drill or distributed crash-consistency guarantee.
 - Initial model/dependency downloads required network access. The verified model cache was reused for container testing; this does not independently prove cold downloads on every network.
 - A separate independent fresh-clone run was not performed; the Docker builds executed the tracked dependency installation/build steps and initial schema migration was tested.
-- GitHub Actions is configured but cannot be claimed to have run remotely before this repository is published.
+- GitHub Actions runs on pushes and pull requests after publication. Check [hosted results](https://github.com/CHAKRAbdedaym/knowledgeos-enterprise-rag/actions) for the status of each revision; local results do not substitute for a hosted run.
 
 ## Floating assistant follow-up
 

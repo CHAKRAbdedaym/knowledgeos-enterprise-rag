@@ -82,7 +82,7 @@ Read [ARCHITECTURE.md](docs/ARCHITECTURE.md) for persistence and request flows, 
 Prerequisites: Git, Docker Engine/Desktop with Compose v2.24+, Python 3.11+ for the standard-library seed scripts, a browser, and internet access for initial dependency/model downloads. A modern CPU and about 4 GB available memory are a practical starting point for this small corpus. No GPU or paid key is required.
 
 ```sh
-git clone <your-repository-url>
+git clone https://github.com/CHAKRAbdedaym/knowledgeos-enterprise-rag.git
 cd knowledgeos-enterprise-rag
 cp .env.example .env
 docker compose up --build -d
@@ -294,12 +294,15 @@ Current tradeoffs include synchronous indexing, character-based chunks, dense-on
 
 No paid-provider quality, large-scale throughput, cost savings or client deployment claim is made. Real verification evidence is kept separate from these future improvements.
 
-## Publishing to GitHub
+## GitHub repository
 
-The repository can be reviewed and committed locally without publishing. Inspect `git status`, ignored files and the final diff first. Then, only if you want to create a public repository using an authenticated GitHub CLI:
+The public repository is [CHAKRAbdedaym/knowledgeos-enterprise-rag](https://github.com/CHAKRAbdedaym/knowledgeos-enterprise-rag). See [GitHub Actions](https://github.com/CHAKRAbdedaym/knowledgeos-enterprise-rag/actions) for checks on each push and pull request.
+
+The owner’s working copy uses this SSH remote:
 
 ```sh
-gh repo create knowledgeos-enterprise-rag --public --source=. --remote=origin --push
+git remote set-url origin git@github.com:CHAKRAbdedaym/knowledgeos-enterprise-rag.git
+git push origin main
 ```
 
-Alternatively create an empty repository yourself, then `git remote add origin <url>` and `git push -u origin main`. No force push or remote visibility changes are needed.
+Review `git status`, ignored files and the staged diff before publishing changes. Environment secrets, uploads, databases and model caches are excluded by `.gitignore`. The repository contains synthetic example documents; application conversation history is local database state, not repository content.
