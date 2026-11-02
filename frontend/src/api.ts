@@ -1,4 +1,5 @@
 export interface Document {
+  employee_available?: boolean;
   id: string;
   title: string;
   filename: string;
@@ -96,10 +97,19 @@ export interface Health {
   status: string;
   [key: string]: unknown;
 }
+let csrfToken = '';
+export function setCsrfToken(value: string) {
+  csrfToken = value;
+}
+export function sessionExpired() {
+  window.dispatchEvent(new Event('knowledgeos-session-expired'));
+}
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api${path}`, {
     ...init,
+    credentials: 'include',
     headers: {
+      'X-CSRF-Token': csrfToken,
       ...(init?.body instanceof FormData
         ? {}
         : { 'Content-Type': 'application/json' }),
@@ -107,6 +117,8 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
     },
   });
   if (!response.ok) {
+    if (response.status === 401 && !['/auth/login', '/auth/me'].includes(path))
+      sessionExpired();
     let detail = `Request failed (${response.status})`;
     try {
       const body = await response.json();
@@ -128,11 +140,14 @@ export function uploadDocument(
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/api/documents');
+    xhr.withCredentials = true;
+    xhr.setRequestHeader('X-CSRF-Token', csrfToken);
     xhr.upload.onprogress = (e) => {
       if (e.lengthComputable)
         onProgress(Math.round((e.loaded / e.total) * 100));
     };
     xhr.onload = () => {
+      if (xhr.status === 401) sessionExpired();
       try {
         const body = JSON.parse(xhr.responseText);
         if (xhr.status >= 200 && xhr.status < 300) resolve(body);

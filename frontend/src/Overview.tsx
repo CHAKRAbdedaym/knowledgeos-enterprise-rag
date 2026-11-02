@@ -1,3 +1,4 @@
+import EnterpriseActivity from './EnterpriseActivity';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -179,6 +180,7 @@ export default function Overview() {
           <span className="illustration-dot dot-two" />
         </div>
       </section>
+      <EnterpriseActivity />
       {dashboard.isPending ? (
         <Loading />
       ) : dashboard.isError ? (

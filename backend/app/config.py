@@ -15,9 +15,12 @@ class Settings(BaseSettings):
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     embedding_dimension: int = 384
     model_cache_dir: Path = Path("./storage/models")
-    llm_provider: Literal["none", "openai", "ollama"] = "none"
+    llm_provider: Literal["none", "openai", "ollama", "gemini"] = "none"
     llm_model: str = ""
-    openai_api_key: str = ""
+    openai_api_key: str = Field(default="", repr=False)
+    gemini_api_key: str = Field(default="", repr=False)
+    allowed_llm_providers: list[Literal["none", "openai", "ollama", "gemini"]] = ["none", "gemini", "openai", "ollama"]
+    provider_max_attempts: int = Field(default=3,ge=1,le=3)
     ollama_url: str = "http://localhost:11434"
     upload_dir: Path = Path("./storage/uploads")
     max_upload_mb: int = Field(default=10, ge=1, le=50)
@@ -28,6 +31,8 @@ class Settings(BaseSettings):
     default_score_threshold: float = Field(default=0.3, ge=0, le=1)
     cors_origins: list[str] = ["http://localhost:5173", "http://localhost:8080", "http://127.0.0.1:5173", "http://127.0.0.1:8080"]
     rate_limit_per_minute: int = Field(default=120, ge=1)
+    auth_cookie_secure: bool = False  # HTTP loopback development; set True behind HTTPS.
+    admin_session_hours: int = Field(default=8, ge=1, le=24)
     provider_timeout_seconds: int = Field(default=60, ge=1, le=180)
 
     @model_validator(mode="after")
@@ -40,6 +45,10 @@ class Settings(BaseSettings):
             )
         if self.llm_provider == "openai" and (not self.openai_api_key or not self.llm_model):
             raise ValueError("OPENAI_API_KEY and LLM_MODEL are required for openai")
+        if self.llm_provider not in self.allowed_llm_providers:
+            raise ValueError("The selected LLM provider is not allowed by the server")
+        if self.llm_provider == "gemini" and (not self.gemini_api_key or not self.llm_model):
+            raise ValueError("GEMINI_API_KEY and LLM_MODEL are required for gemini")
         if self.llm_provider == "ollama" and not self.llm_model:
             raise ValueError("LLM_MODEL is required for ollama")
         return self

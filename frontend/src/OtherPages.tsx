@@ -1,3 +1,5 @@
+import EnterpriseActivity from './EnterpriseActivity';
+import RuntimeSettingsPanel from './RuntimeSettingsPanel';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
@@ -79,6 +81,7 @@ export function AnalyticsPage() {
           </div>
         }
       />
+      <EnterpriseActivity days={days} detailed />
       {query.isPending ? (
         <Loading />
       ) : query.isError ? (
@@ -701,10 +704,11 @@ export function SettingsPage() {
               </dl>
               <div className="inline-info">
                 {c.llm_provider === 'none'
-                  ? 'No provider is configured. Research returns relevant document excerpts without AI generation.'
+                  ? 'No generative provider is enabled. Research returns relevant document excerpts without AI generation.'
                   : 'Relevant passages are sent to the configured language model to produce a source-grounded answer.'}{' '}
-                Change provider settings through the server environment, then
-                restart the backend.
+                Provider credentials stay in the server environment. Choose an
+                allowed, configured provider in Server defaults below; status
+                here is configuration, not a live model or quota check.
               </div>
             </section>
             <section className="panel settings-panel">
@@ -735,10 +739,11 @@ export function SettingsPage() {
           </div>
         )
       )}
+      <RuntimeSettingsPanel />
       <section className="panel settings-panel">
         <SectionTitle
-          title="Research preferences"
-          description="Saved in this browser and applied to new questions."
+          title="Playground browser preferences"
+          description="Local Playground overrides, saved in this browser only."
           action={
             <span className="soft-icon">
               <Settings2 size={19} />
@@ -792,8 +797,8 @@ export function SettingsPage() {
           )}
           <div className="settings-save">
             <p>
-              These preferences affect retrieval, not the server’s
-              configuration.
+              These overrides affect Playground questions in this browser; they
+              do not change the persisted server defaults.
             </p>
             <Button disabled={!valid}>
               {saved ? (

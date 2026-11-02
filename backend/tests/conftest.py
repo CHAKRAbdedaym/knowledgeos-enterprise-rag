@@ -3,6 +3,7 @@
 import hashlib
 import os
 import re
+import secrets
 from pathlib import Path
 
 import pytest
@@ -51,7 +52,7 @@ def client(tmp_path, monkeypatch):
     sessions = sessionmaker(bind=engine, expire_on_commit=False)
     settings = Settings(database_url=url, upload_dir=tmp_path / "uploads", rate_limit_per_minute=1000)
     remote = os.getenv("TEST_QDRANT_URL")
-    qdrant = QdrantClient(url=remote) if remote else QdrantClient(":memory:")
+    qdrant = QdrantClient(url=remote, timeout=30) if remote else QdrantClient(":memory:")
     settings.qdrant_collection = "test_" + hashlib.sha256(str(tmp_path).encode()).hexdigest()[:16]
     vectors = VectorService(settings, client=qdrant, embeddings=DeterministicTestEmbeddings())
 
@@ -64,6 +65,19 @@ def client(tmp_path, monkeypatch):
     app.dependency_overrides[get_vectors] = lambda: vectors
     request_times.clear()
     with TestClient(app, raise_server_exceptions=False) as test_client:
+        from app.auth import hasher
+        from app.models import Admin
+        password = secrets.token_urlsafe(24)
+        with sessions() as db:
+            db.add(Admin(username="fixture-admin", password_hash=hasher.hash(password)))
+            db.commit()
+        test_client.headers["Origin"] = "http://localhost:8080"
+        logged_in = test_client.post("/api/auth/login", json={"username": "fixture-admin", "password": password})
+        assert logged_in.status_code == 200, logged_in.text
+        test_client.headers["X-CSRF-Token"] = logged_in.json()["csrf_token"]
+        request_times.clear()
+        test_client.db_sessions = sessions
+        test_client.admin_password = password
         test_client.vectors = vectors
         test_client.settings = settings
         yield test_client

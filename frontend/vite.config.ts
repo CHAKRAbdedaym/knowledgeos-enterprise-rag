@@ -25,5 +25,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test-setup.ts'],
     css: false,
+    // Keep DOM-heavy interaction suites stable on the local 8 GB demo machine.
+    fileParallelism: false,
+    maxWorkers: 1,
+    testTimeout: 15000,
   },
 });

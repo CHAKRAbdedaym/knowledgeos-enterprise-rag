@@ -22,7 +22,9 @@ def error_response(status, message, code=None, details=None):
 
 
 async def http_error(request, exc):
-    return error_response(exc.status_code, str(exc.detail))
+    response = error_response(exc.status_code, str(exc.detail))
+    response.headers.update(exc.headers or {})
+    return response
 
 
 # registered by app.main
@@ -69,5 +71,7 @@ async def limits(request: Request, call_next):
                 return response
             queue.append(current)
     response = await call_next(request)
+    if request.url.path.startswith("/api") or request.url.path == "/docs":
+        response.headers["Cache-Control"] = "no-store"
     response.headers["X-Content-Type-Options"] = "nosniff"
     return response

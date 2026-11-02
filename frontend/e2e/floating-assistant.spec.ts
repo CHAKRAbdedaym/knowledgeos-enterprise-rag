@@ -1,8 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './admin-test';
 
 test('quick chat retrieves sources, survives reload, and expands into Research', async ({
   page,
-  request,
 }) => {
   let conversationId: string | null = null;
   const errors: string[] = [];
@@ -96,6 +95,12 @@ test('quick chat retrieves sources, survives reload, and expands into Research',
     expect(errors).toEqual([]);
   } finally {
     if (conversationId)
-      await request.delete(`/api/conversations/${conversationId}`);
+      await page.evaluate(async (id) => {
+        const me = await fetch('/api/auth/me').then((r) => r.json());
+        await fetch(`/api/conversations/${id}`, {
+          method: 'DELETE',
+          headers: { 'X-CSRF-Token': me.csrf_token },
+        });
+      }, conversationId);
   }
 });

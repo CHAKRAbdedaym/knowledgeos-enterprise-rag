@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Measure retrieval against authored ground truth; never synthesize a score."""
 import argparse
-from datetime import datetime, timezone
 import json
-from pathlib import Path
 import sys
 import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+from admin_session import authenticate
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -25,6 +27,7 @@ def main():
     parser.add_argument('--top-k', type=int, default=5)
     parser.add_argument('--score-threshold', type=float, default=0.3)
     args = parser.parse_args()
+    authenticate(args.api_url)
     if not 1 <= args.top_k <= 10 or not 0 <= args.score_threshold <= 1:
         parser.error('top-k must be between 1 and 10 and score-threshold between 0 and 1')
     dataset = json.loads(args.dataset.read_text())

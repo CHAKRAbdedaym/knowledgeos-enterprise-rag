@@ -128,10 +128,13 @@ class VectorService:
                 wait=True,
             )
 
-    def search(self, question, top_k, threshold):
+    def search(self, question, top_k, threshold, document_ids=None):
         if not self.client.collection_exists(self.settings.qdrant_collection):
             return []
-        results = self.store().similarity_search_with_score(question, k=top_k, score_threshold=threshold)
+        if document_ids is not None and not document_ids:
+            return []
+        acl = None if document_ids is None else models.Filter(must=[models.FieldCondition(key="metadata.document_id", match=models.MatchAny(any=list(document_ids)))])
+        results = self.store().similarity_search_with_score(question, k=top_k, score_threshold=threshold, filter=acl)
         return [
             {
                 **{key: doc.metadata.get(key) for key in ["document_id", "title", "chunk_id", "page", "start_offset", "end_offset"]},

@@ -12,3 +12,5 @@ fastembed>=0.6,<1
 huggingface-hub>=1.0,<2
 pypdf>=5.4,<7
 httpx>=0.28,<1
+
+argon2-cffi==25.1.0

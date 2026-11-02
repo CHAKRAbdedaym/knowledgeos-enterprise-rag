@@ -24,3 +24,17 @@ frontend-check:
 	cd frontend && npm run lint && npm run typecheck && npm run test && npm run build
 
 test: backend-test frontend-check
+
+.PHONY: real-services-test portal-setup enterprise-acceptance gemini-verify
+real-services-test:
+	backend/.venv/bin/python scripts/test_real_services.py
+
+portal-setup:
+	backend/.venv/bin/python scripts/setup_demo_portal.py
+	docker compose up -d --no-deps --force-recreate intranet
+
+enterprise-acceptance:
+	backend/.venv/bin/python scripts/enterprise_acceptance.py
+
+gemini-verify:
+	docker compose exec backend python -m app.verify_gemini

@@ -1,0 +1,142 @@
+.auth-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+.auth-page {
+  min-height: 100vh;
+  max-width: none;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: 8vw;
+  padding: 8vh 9vw;
+  background:
+    radial-gradient(ellipse at 10% 80%, #dce7ff, transparent 60%), #f5f7fc;
+  color: #151d38;
+}
+.auth-story > img {
+  display: block;
+  margin-bottom: 58px;
+}
+.auth-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #2458ff;
+  font-weight: 700;
+}
+.auth-story h1 {
+  font-size: clamp(38px, 4.2vw, 64px);
+  line-height: 1.08;
+  margin: 24px 0;
+  color: #151d38;
+}
+.auth-story h1 span {
+  color: #2458ff;
+}
+.auth-story > p {
+  color: #626c82;
+  max-width: 430px;
+  font-size: 15px;
+}
+.auth-story > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 38px;
+  color: #2458ff;
+}
+.auth-story > small {
+  display: block;
+  color: #626c82;
+  margin-top: 55px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 40px;
+  background: #fff;
+  border: 1px solid #e1e7f1;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px #151d3809;
+}
+.auth-lock {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  background: #eaf0ff;
+  border-radius: 16px;
+  color: #2458ff;
+  margin-bottom: 24px;
+}
+.auth-card h2 {
+  font-size: 29px;
+  color: #151d38;
+}
+.auth-card > p {
+  color: #626c82;
+  margin-top: 10px;
+}
+.auth-card form {
+  display: grid;
+  margin-top: 28px;
+  gap: 10px;
+}
+.auth-card label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.auth-card input {
+  height: 46px;
+  padding: 10px 14px;
+  background: #f8faff;
+  color: #151d38;
+  border: 1px solid #dbe3f3;
+  border-radius: 12px;
+}
+.auth-card form button {
+  margin-top: 15px;
+  justify-content: center;
+  min-height: 46px;
+}
+.auth-card .auth-help {
+  font-size: 11px;
+  margin-top: 24px;
+}
+.auth-card .auth-error {
+  color: #ad283b;
+  font-size: 12px;
+}
+.auth-session-error {
+  padding: 12px;
+  background: #fff0f0;
+  color: #ad283b;
+}
+@media (max-width: 760px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 32px 22px;
+  }
+  .auth-story > img {
+    margin-bottom: 28px;
+    width: 140px;
+  }
+  .auth-story h1 {
+    font-size: 38px;
+  }
+  .auth-story > div,
+  .auth-story > small {
+    display: none;
+  }
+  .auth-card {
+    max-width: none;
+    padding: 28px;
+  }
+  .auth-story > p {
+    font-size: 13px;
+  }
+}

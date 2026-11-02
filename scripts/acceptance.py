@@ -8,6 +8,8 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
+from admin_session import authenticate
+
 BASE = os.environ.get('API_URL', 'http://localhost:8000/api').rstrip('/')
 QDRANT = os.environ.get('QDRANT_URL', 'http://localhost:6333').rstrip('/')
 COLLECTION = os.environ.get('QDRANT_COLLECTION', 'knowledgeos')
@@ -48,6 +50,7 @@ def vector_count(document_id):
 
 
 def main():
+    authenticate(BASE)
     document_id = conversation_id = None
     try:
         request('GET', '/readiness')

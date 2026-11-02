@@ -8,7 +8,9 @@ def upload(client, content=b"Incident escalation: notify the security incident c
         "/api/documents", files={"file": (filename, content, "text/markdown")}, data={"category": "Security", "tags": "policy,synthetic"}
     )
     assert response.status_code == 201, response.text
-    return response.json()
+    result = response.json()
+    # Some tests intentionally exercise failed indexing; successful paths assert it explicitly.
+    return result
 
 
 def test_full_document_conversation_and_analytics_workflow(client):
@@ -119,6 +121,7 @@ def test_mime_mismatch_and_error_sanitization(client):
 
 def test_embedding_artifact_drift_is_rejected(client):
     document = upload(client)
+    assert document["status"] == "indexed", document
     client.vectors.embeddings.revision = "different-artifact"
     response = client.post("/api/retrieval", json={"question": "incident security commander"})
     assert response.status_code == 409
@@ -159,6 +162,7 @@ def test_provider_failure_is_safe_and_does_not_invent_answer(client, monkeypatch
 
 def test_heading_title_and_stored_chunk_inspector(client):
     document = upload(client, content=b"# Synthetic Security Policy\n\nNotify the incident commander.")
+    assert document["status"] == "indexed", document
     assert document["title"] == "Synthetic Security Policy"
     assert document["page_count"] == 1
     assert document["updated_at"]

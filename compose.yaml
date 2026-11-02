@@ -30,6 +30,8 @@ services:
         required: false
     environment:
       DATABASE_URL: postgresql+psycopg://knowledgeos:${POSTGRES_PASSWORD:-knowledgeos_local_demo}@postgres:5432/knowledgeos
+      # Portal credential is never needed in the API container.
+      KNOWLEDGEOS_INTEGRATION_KEY: ""
       QDRANT_URL: http://qdrant:6333
       CORS_ORIGINS: '["http://localhost:8080","http://127.0.0.1:8080","http://localhost:5173","http://127.0.0.1:5173"]'
       UPLOAD_DIR: /app/uploads
@@ -46,7 +48,7 @@ services:
       qdrant:
         condition: service_started
     healthcheck:
-      test: ['CMD', 'python', '-c', 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/api/readiness", timeout=10)']
+      test: ['CMD', 'python', '-c', 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/api/health", timeout=10)']
       interval: 15s
       timeout: 12s
       start_period: 180s
@@ -60,6 +62,22 @@ services:
       backend:
         condition: service_started
     restart: unless-stopped
+  intranet:
+    build:
+      context: .
+      dockerfile: examples/intranet/Dockerfile
+    ports:
+      - '127.0.0.1:8090:8090'
+    environment:
+      KNOWLEDGEOS_API_URL: http://backend:8000/api/v1
+      KNOWLEDGEOS_PUBLIC_API_URL: http://localhost:8000/api/v1
+      KNOWLEDGEOS_INTEGRATION_KEY: ${KNOWLEDGEOS_INTEGRATION_KEY:-}
+      PORTAL_ORIGIN: ${PORTAL_ORIGIN:-http://127.0.0.1:8090}
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   qdrant_data:

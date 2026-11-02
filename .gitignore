@@ -17,3 +17,8 @@ uploads/
 *.db
 *.log
 .DS_Store
+
+# Private local handover and backup artifacts
+/understand.md
+*.dump
+storage/

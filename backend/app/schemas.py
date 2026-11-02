@@ -37,6 +37,9 @@ class Source(BaseModel):
 
 
 class Trace(BaseModel):
+    generation_ms: int | None = None
+    usage: dict[str, int] | None = None
+    attempts: int | None = None
     question: str
     latency_ms: int
     retrieval_ms: int
@@ -50,6 +53,7 @@ class Trace(BaseModel):
 
 
 class DocumentResponse(BaseModel):
+    employee_available: bool = False
     id: str
     title: str
     filename: str

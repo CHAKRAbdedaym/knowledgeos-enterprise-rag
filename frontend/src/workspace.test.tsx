@@ -63,7 +63,31 @@ beforeEach(() => {
     vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
       const url = String(input);
       let data: unknown = { status: 'ok' };
-      if (url.endsWith('/config')) data = config;
+      if (url.endsWith('/auth/me'))
+        data = {
+          id: 'admin-1',
+          username: 'fixture-admin',
+          csrf_token: 'fixture-csrf',
+        };
+      else if (url.endsWith('/admin/settings'))
+        data = {
+          default_top_k: 5,
+          default_score_threshold: 0.3,
+          llm_provider: 'none',
+          llm_model: '',
+          allowed_providers: ['none', 'gemini', 'openai', 'ollama'],
+          configured_providers: {
+            none: true,
+            gemini: false,
+            openai: false,
+            ollama: false,
+          },
+          embedding_model: 'sentence-transformers/all-MiniLM-L6-v2',
+          embedding_dimension: 384,
+          status_note:
+            'Configuration status only; live access/quotas require real request',
+        };
+      else if (url.endsWith('/config')) data = config;
       else if (url.endsWith('/documents/doc-1')) data = doc;
       else if (url.endsWith('/documents')) data = [doc];
       else if (url.endsWith('/conversations') && init?.method === 'POST')
@@ -234,7 +258,7 @@ describe('workspace interactions', () => {
     const user = userEvent.setup();
     mount('/documents');
     await user.click(
-      screen.getByRole('button', { name: 'Open knowledge assistant' }),
+      await screen.findByRole('button', { name: 'Open knowledge assistant' }),
     );
     let panel = screen.getByRole('dialog', { name: 'Knowledge assistant' });
     await user.type(
@@ -257,7 +281,7 @@ describe('workspace interactions', () => {
     );
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     await user.click(
-      screen.getByRole('button', { name: 'Open knowledge assistant' }),
+      await screen.findByRole('button', { name: 'Open knowledge assistant' }),
     );
     panel = screen.getByRole('dialog', { name: 'Knowledge assistant' });
     expect(
@@ -295,7 +319,7 @@ describe('workspace interactions', () => {
     );
     mount('/documents');
     await user.click(
-      screen.getByRole('button', { name: 'Open knowledge assistant' }),
+      await screen.findByRole('button', { name: 'Open knowledge assistant' }),
     );
     const panel = screen.getByRole('dialog', { name: 'Knowledge assistant' });
     await user.type(
@@ -325,11 +349,18 @@ describe('workspace interactions', () => {
   it('shows API failures without inventing documents', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(
-        async () =>
-          new Response(JSON.stringify({ detail: 'Service unavailable' }), {
-            status: 503,
-          }),
+      vi.fn(async (input: string | URL | Request) =>
+        String(input).endsWith('/auth/me')
+          ? new Response(
+              JSON.stringify({
+                id: 'fixture',
+                username: 'fixture',
+                csrf_token: 'csrf',
+              }),
+            )
+          : new Response(JSON.stringify({ detail: 'Service unavailable' }), {
+              status: 503,
+            }),
       ),
     );
     mount('/documents');

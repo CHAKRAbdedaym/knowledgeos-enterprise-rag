@@ -16,6 +16,7 @@ import {
   Database,
   HelpCircle,
   LayoutDashboard,
+  PlugZap,
   Menu,
   MessageSquare,
   Moon,
@@ -30,9 +31,12 @@ import { AnimatePresence, motion } from 'motion/react';
 import { api, type Config, type Health } from './api';
 import { Badge, Button, Crumb, Loading, Modal } from './components/ui';
 import FloatingAssistant from './components/FloatingAssistant';
+import { AuthGate } from './Auth';
+import { useAdminAuth } from './auth-context';
 const Overview = lazy(() => import('./Overview'));
 const Documents = lazy(() => import('./Documents'));
 const Research = lazy(() => import('./Research'));
+const Integrations = lazy(() => import('./Integrations'));
 const AnalyticsPage = lazy(() =>
   import('./OtherPages').then((module) => ({ default: module.AnalyticsPage })),
 );
@@ -44,11 +48,20 @@ const SettingsPage = lazy(() =>
 );
 const navigation = [
   { to: '/', label: 'Overview', icon: LayoutDashboard },
-  { to: '/research', label: 'Research', icon: MessageSquare },
+  { to: '/research', label: 'AI Playground', icon: MessageSquare },
   { to: '/documents', label: 'Knowledge Base', icon: Database },
   { to: '/analytics', label: 'Intelligence', icon: ChartNoAxesCombined },
+  { to: '/integrations', label: 'Integrations', icon: PlugZap },
 ];
 export default function App() {
+  return (
+    <AuthGate>
+      <Workspace />
+    </AuthGate>
+  );
+}
+function Workspace() {
+  const { logout } = useAdminAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobile, setMobile] = useState(false);
@@ -206,7 +219,13 @@ export default function App() {
               <span>Find your way</span>
               <kbd>⌘ K</kbd>
             </button>
-            <Badge tone="purple">Demo workspace</Badge>
+            <Badge tone="purple">Admin workspace</Badge>
+            <button
+              className="button button-secondary"
+              onClick={() => void logout()}
+            >
+              Sign out
+            </button>
             <button
               className="icon-button"
               aria-label={
@@ -251,6 +270,7 @@ export default function App() {
                   <Route path="/documents" element={<Documents />} />
                   <Route path="/research" element={<Research />} />
                   <Route path="/analytics" element={<AnalyticsPage />} />
+                  <Route path="/integrations" element={<Integrations />} />
                   <Route path="/architecture" element={<Architecture />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route

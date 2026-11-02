@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from uuid import uuid4
-from sqlalchemy import DateTime, ForeignKey, Integer, JSON, String, Text
+from sqlalchemy import DateTime, ForeignKey, Integer, JSON, String, Text, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -24,6 +24,7 @@ class Document(Base):
     category: Mapped[str] = mapped_column(String(80), default="General")
     tags: Mapped[list] = mapped_column(JSON, default=list)
     status: Mapped[str] = mapped_column(String(20), default="indexing")
+    employee_available: Mapped[bool] = mapped_column(default=False, server_default="false")
     sha256: Mapped[str] = mapped_column(String(64), unique=True)
     size_bytes: Mapped[int] = mapped_column(Integer)
     text: Mapped[str] = mapped_column(Text, default="")
@@ -48,6 +49,14 @@ class Chunk(Base):
 
 class Conversation(Base):
     __tablename__ = "conversations"
+    __table_args__ = (
+        CheckConstraint(
+            "(integration_id IS NULL AND employee_id IS NULL) OR (integration_id IS NOT NULL AND employee_id IS NOT NULL)",
+            name="conversation_owner_pair",
+        ),
+    )
+    integration_id: Mapped[str | None] = mapped_column(ForeignKey("integrations.id"), nullable=True, index=True)
+    employee_id: Mapped[str | None] = mapped_column(ForeignKey("employees.id"), nullable=True, index=True)
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
     title: Mapped[str] = mapped_column(String(160), default="New conversation")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now, index=True)
@@ -67,6 +76,8 @@ class Message(Base):
 
 class QueryLog(Base):
     __tablename__ = "query_logs"
+    integration_id: Mapped[str | None] = mapped_column(ForeignKey("integrations.id"), nullable=True, index=True)
+    channel: Mapped[str] = mapped_column(String(20), default="admin", server_default="admin")
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
     conversation_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
     question: Mapped[str] = mapped_column(Text)
@@ -75,3 +86,90 @@ class QueryLog(Base):
     matched_chunks: Mapped[int] = mapped_column(Integer)
     document_ids: Mapped[list] = mapped_column(JSON, default=list)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now, index=True)
+
+
+class Admin(Base):
+    __tablename__ = "admins"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    username: Mapped[str] = mapped_column(String(160), unique=True)
+    password_hash: Mapped[str] = mapped_column(Text)
+    enabled: Mapped[bool] = mapped_column(default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class AdminSession(Base):
+    __tablename__ = "admin_sessions"
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    admin_id: Mapped[str] = mapped_column(ForeignKey("admins.id", ondelete="CASCADE"), index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class LoginBucket(Base):
+    __tablename__ = "login_buckets"
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    attempts: Mapped[int] = mapped_column(Integer)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+
+
+class Integration(Base):
+    __tablename__ = "integrations"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    name: Mapped[str] = mapped_column(String(120))
+    enabled: Mapped[bool] = mapped_column(default=True)
+    allowed_origins: Mapped[list] = mapped_column(JSON, default=list)
+    rate_limit_per_minute: Mapped[int] = mapped_column(Integer, default=60)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class IntegrationDocument(Base):
+    __tablename__ = "integration_documents"
+    integration_id: Mapped[str] = mapped_column(ForeignKey("integrations.id", ondelete="CASCADE"), primary_key=True)
+    document_id: Mapped[str] = mapped_column(ForeignKey("documents.id", ondelete="CASCADE"), primary_key=True)
+
+
+class IntegrationKey(Base):
+    __tablename__ = "integration_keys"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    integration_id: Mapped[str] = mapped_column(ForeignKey("integrations.id"), index=True)
+    scopes: Mapped[list] = mapped_column(JSON, default=lambda: ["query", "conversations", "sources", "widget_sessions"])
+    secret_hash: Mapped[str] = mapped_column(String(64), unique=True)
+    prefix: Mapped[str] = mapped_column(String(16))
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class Employee(Base):
+    __tablename__ = "employees"
+    __table_args__ = (UniqueConstraint("integration_id", "external_subject", name="employee_subject_per_integration"),)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    integration_id: Mapped[str] = mapped_column(ForeignKey("integrations.id"), index=True)
+    external_subject: Mapped[str] = mapped_column(String(160))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class WidgetSession(Base):
+    __tablename__ = "widget_sessions"
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    integration_id: Mapped[str] = mapped_column(ForeignKey("integrations.id"), index=True)
+    key_id: Mapped[str] = mapped_column(ForeignKey("integration_keys.id"), index=True)
+    employee_id: Mapped[str] = mapped_column(ForeignKey("employees.id"), index=True)
+    origin: Mapped[str] = mapped_column(String(300))
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+
+
+class SecurityAudit(Base):
+    __tablename__ = "security_audit"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    admin_id: Mapped[str | None] = mapped_column(ForeignKey("admins.id"), nullable=True)
+    integration_id: Mapped[str | None] = mapped_column(ForeignKey("integrations.id"), nullable=True)
+    action: Mapped[str] = mapped_column(String(80))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class RuntimeSettings(Base):
+    __tablename__ = "runtime_settings"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    values: Mapped[dict] = mapped_column(JSON, default=dict)

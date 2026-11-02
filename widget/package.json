@@ -1,0 +1,9 @@
+{
+  "name": "knowledgeos-employee-widget",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "check": "node --check knowledgeos-widget.js"
+  }
+}

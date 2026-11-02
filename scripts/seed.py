@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Upload the explicitly synthetic corpus through the public ingestion API."""
+"""Upload the explicitly synthetic corpus through the authenticated administrator ingestion API."""
 import argparse
 import json
-from pathlib import Path
 import sys
 import urllib.error
 import urllib.request
 import uuid
+from pathlib import Path
+
+from admin_session import authenticate
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -16,6 +18,7 @@ def main():
     parser.add_argument('--api-url', default='http://localhost:8000/api')
     parser.add_argument('--corpus', type=Path, default=ROOT / 'data/synthetic')
     args = parser.parse_args()
+    authenticate(args.api_url)
     manifest = json.loads((args.corpus / 'manifest.json').read_text())
     failures = 0
     for doc in manifest['documents']:

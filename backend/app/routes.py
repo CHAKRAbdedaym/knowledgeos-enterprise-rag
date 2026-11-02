@@ -28,18 +28,23 @@ from app.schemas import (
     DashboardResponse,
     AnalyticsResponse,
 )
-from app.config import Settings, get_settings
+from app.config import Settings
 from app.database import get_db
 from app.ingestion import InvalidDocument, extract
 from app.indexing import check_embedding_revision, index_document
 from app.models import Chunk, Conversation, Document, Message, QueryLog, uid
 from app.retrieval import get_vectors, retrieve
 from app.generation import answer
+from app.gemini import ProviderError
+
+from app.auth import require_admin
+from app.runtime import runtime_settings
 
 logger = logging.getLogger("knowledgeos")
-app = APIRouter()
+
+app = APIRouter(dependencies=[Depends(require_admin)])
 Db = Annotated[Session, Depends(get_db)]
-Config = Annotated[Settings, Depends(get_settings)]
+Config = Annotated[Settings, Depends(runtime_settings)]
 Vectors = Annotated[object, Depends(get_vectors)]
 mutation_lock = Lock()
 
@@ -62,6 +67,7 @@ def document_json(document, detail=False):
             "size_bytes",
             "error",
             "embedding_revision",
+            "employee_available",
             "page_count",
         ]
     }
@@ -85,7 +91,7 @@ def conversation_json(conversation):
 
 def required(db, model, id):
     obj = db.get(model, id)
-    if obj is None:
+    if obj is None or (model is Conversation and obj.integration_id is not None):
         raise HTTPException(404, "Resource not found")
     return obj
 
@@ -240,7 +246,12 @@ def reindex(document_id: str, db: Db, vectors: Vectors, settings: Config):
 
 @app.get("/api/conversations", response_model=list[ConversationResponse])
 def list_conversations(db: Db):
-    return [conversation_json(c) for c in db.scalars(select(Conversation).order_by(Conversation.created_at.desc())).all()]
+    return [
+        conversation_json(c)
+        for c in db.scalars(
+            select(Conversation).where(Conversation.integration_id.is_(None)).order_by(Conversation.created_at.desc())
+        ).all()
+    ]
 
 
 @app.post("/api/conversations", status_code=201, response_model=ConversationResponse)
@@ -328,17 +339,21 @@ def send_message(conversation_id: str, body: QuestionInput, db: Db, vectors: Vec
             db.scalars(select(Message).where(Message.conversation_id == conversation_id).order_by(Message.created_at.desc()).limit(6)).all()
         )
     )
+    metadata = {}
     try:
-        content, mode = answer(body.question, sources, history, settings)
+        content, mode = answer(body.question, sources, history, settings, metadata)
     except Exception as exc:
         logger.error("answer_provider_failed", extra={"error_type": type(exc).__name__})
         trace["latency_ms"] = round((perf_counter() - start) * 1000)
         log_query(db, body, sources, trace, "provider_error", conversation_id)
         db.commit()
         raise HTTPException(
-            503, "Answer provider unavailable or returned an invalid response. Try again or use retrieval diagnostics."
-        ) from exc
+            exc.status_code if isinstance(exc, ProviderError) else 503,
+            "Answer provider unavailable or returned an invalid response. Try again or use retrieval diagnostics.",
+            headers={"Retry-After": str(exc.retry_after)} if isinstance(exc, ProviderError) and exc.retry_after is not None else None,
+        ) from None
     trace["latency_ms"] = round((perf_counter() - start) * 1000)
+    trace.update(metadata)
     user = Message(conversation_id=conversation_id, role="user", content=body.question, sources=[])
     db.add(user)
     db.flush()

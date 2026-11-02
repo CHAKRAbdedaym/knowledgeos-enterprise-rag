@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './admin-test';
 
 test('real research, document lifecycle, responsive navigation and screenshots', async ({
   page,

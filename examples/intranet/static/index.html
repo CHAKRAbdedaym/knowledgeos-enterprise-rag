@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Atlas · Employee portal demonstration</title>
+    <link rel="stylesheet" href="/portal.css" />
+  </head>
+  <body>
+    <div class="demo">
+      FICTIONAL EMPLOYEE INTRANET · KnowledgeOS integration demonstration ·
+      Synthetic policies and identities
+    </div>
+    <header>
+      <a class="brand" href="/" aria-label="Atlas home"
+        ><span>A</span>atlas<small>WORKSPACE</small></a
+      >
+      <nav aria-label="Portal navigation">
+        <a href="#home">Home</a><a href="#resources">Resources</a
+        ><a href="#knowledge">Knowledge assistant</a>
+      </nav>
+      <button id="logout" hidden>Sign out</button>
+    </header>
+    <main id="login">
+      <section class="intro">
+        <p class="eyebrow">YOUR TEAM, CONNECTED</p>
+        <h1>A little less searching.<br /><span>A lot more clarity.</span></h1>
+        <p>
+          Your fictional employee home for company information, useful resources
+          and source-grounded answers.
+        </p>
+      </section>
+      <section class="login-card">
+        <span class="lock">↗</span>
+        <h2>Explore the employee experience.</h2>
+        <p>
+          Choose a synthetic persona to open this demonstration. This selector
+          is not a production identity provider or SSO.
+        </p>
+        <form id="login-form">
+          <label for="persona">Demonstration identity</label
+          ><select id="persona">
+            <option value="camille">Camille Demo · Product designer</option>
+            <option value="samir">
+              Samir Demo · Software engineer
+            </option></select
+          ><button type="submit">Enter demo workspace <span>→</span></button>
+        </form>
+        <p class="error" id="login-error" role="alert" hidden></p>
+        <small
+          >The portal server maps this selection to a fixed synthetic identity.
+          Integration secrets stay on the server.</small
+        >
+      </section>
+    </main>
+    <main id="dashboard" hidden>
+      <section id="home" class="welcome">
+        <div>
+          <p class="eyebrow">YOUR EMPLOYEE WORKSPACE</p>
+          <h1>Hello, <span id="employee-name"></span>.</h1>
+          <p>Everything you need for a more focused day, in one place.</p>
+        </div>
+        <span class="avatar" id="initials"></span>
+      </section>
+      <section id="knowledge" class="knowledge-hero">
+        <div>
+          <span class="pill">KNOWLEDGEOS · CONNECTED ASSISTANT</span>
+          <h2>
+            Your company knowledge.<br /><span>A conversation away.</span>
+          </h2>
+          <p>
+            Ask about the synthetic HR and IT policies indexed in KnowledgeOS.
+            The assistant retrieves only the documents permitted by this
+            portal’s integration.
+          </p>
+          <button id="open-assistant">Ask the assistant <span>↗</span></button>
+        </div>
+        <div class="orbit" aria-hidden="true">
+          <span>DOCS</span><strong>K</strong><span>ANSWERS</span>
+        </div>
+      </section>
+      <section id="resources">
+        <div class="section-head">
+          <h2>Your everyday resources</h2>
+          <span>Fictional reference links</span>
+        </div>
+        <div class="cards">
+          <article>
+            <span class="card-icon">01</span>
+            <h3>People & culture</h3>
+            <p>Leave, remote work, learning and onboarding.</p>
+            <button class="ask" data-question="What is the remote work policy?">
+              Explore remote work ↗
+            </button>
+          </article>
+          <article>
+            <span class="card-icon">02</span>
+            <h3>IT & access</h3>
+            <p>Managed equipment, account permissions and support.</p>
+            <button class="ask" data-question="How do I request IT access?">
+              Ask about IT access ↗
+            </button>
+          </article>
+          <article>
+            <span class="card-icon">03</span>
+            <h3>Learning & growth</h3>
+            <p>Training budgets, approval and knowledge sharing.</p>
+            <button
+              class="ask"
+              data-question="What is the annual learning allowance and how many planned training days are provided?"
+            >
+              Find training guidance ↗
+            </button>
+          </article>
+        </div>
+      </section>
+      <section class="note">
+        <strong>Evidence you can inspect</strong>
+        <p>
+          Answers depend on the integration’s authorized documents. English
+          questions work best with the current MiniLM corpus. Retrieval-only
+          mode displays excerpts without pretending to generate an AI answer.
+        </p>
+      </section>
+      <p class="error" id="portal-error" role="alert" hidden></p>
+    </main>
+    <footer>
+      Atlas is a fictional portal. KnowledgeOS is an independent portfolio
+      reconstruction, not an official IAWEB.DEV employee service.
+    </footer>
+    <script type="module" src="/portal.js"></script>
+  </body>
+</html>

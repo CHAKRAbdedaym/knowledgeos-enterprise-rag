@@ -373,6 +373,14 @@ export default function Documents() {
                     </td>
                     <td>
                       <Status status={doc.status} />
+                      <span
+                        className="muted"
+                        style={{ display: 'block', fontSize: 10, marginTop: 5 }}
+                      >
+                        {doc.employee_available
+                          ? 'Employee eligible · scoped'
+                          : 'Admin only'}
+                      </span>
                     </td>
                     <td className="number-cell">{doc.chunk_count}</td>
                     <td className="muted">{date(doc.created_at)}</td>
@@ -591,6 +599,13 @@ export default function Documents() {
               <div className="detail-meta">
                 <Status status={detail.data.status} />
                 <Badge>{detail.data.category}</Badge>
+                <Badge
+                  tone={detail.data.employee_available ? 'green' : 'neutral'}
+                >
+                  {detail.data.employee_available
+                    ? 'Employee eligible · integration scope required'
+                    : 'Admin only'}
+                </Badge>
                 <span>{bytes(detail.data.size_bytes)}</span>
                 <span>{detail.data.chunk_count} chunks</span>
               </div>
