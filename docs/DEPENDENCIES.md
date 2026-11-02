@@ -26,3 +26,5 @@ Implementation references checked during development:
 - [FastAPI](https://fastapi.tiangolo.com/), [SQLAlchemy](https://docs.sqlalchemy.org/en/20/) and [Alembic](https://alembic.sqlalchemy.org/en/latest/): typed API and versioned persistence.
 
 A supported model name is configured at runtime for external generation. No subscription, API balance or model availability is assumed by the repository.
+
+Administrator password hashing uses argon2-cffi (MIT) and its pinned bindings; passwords use Argon2id. See the [upstream API](https://argon2-cffi.readthedocs.io/en/stable/api.html).

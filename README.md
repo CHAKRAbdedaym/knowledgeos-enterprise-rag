@@ -12,13 +12,47 @@ The interface references IAWEB.DEV’s blue/navy visual language and displays it
 
 ![KnowledgeOS overview, captured from the running application](docs/screenshots/overview-desktop.png)
 
+## Enterprise status and entry points
+
+The administration console is protected by server-side sessions and CSRF. The independent employee widget uses `/api/v1`, hashed expiring integration keys on the portal server and short-lived employee browser tokens. Document access defaults to deny: publishing a document and explicitly granting it to an integration are separate administrator actions.
+
+- **Admin:** http://localhost:8080 — login, documents, AI Playground, integrations, settings and aggregate activity.
+- **Fictional employee portal:** http://127.0.0.1:8090 — distinct hostname for cookie isolation, independent widget, fixed synthetic demo personas.
+- **API:** http://localhost:8000; OpenAPI `/api/docs` requires administrator login.
+- **Gemini:** `gemini-3.5-flash-lite` model access and genuine grounded generation verified on 2026-11-02. The configured local deployment uses Gemini; a fresh clone defaults to retrieval-only. Remaining project quota and billing tier are not exposed by model access and were not verified.
+
+![Integration administration, actual running UI](docs/screenshots/enterprise-integrations.png)
+![Employee widget with an actual Gemini answer and authorized synthetic sources](docs/screenshots/employee-intranet-gemini.png)
+
+The current local demonstration already has a dedicated **Atlas fictional employee portal** integration, scoped only to the additional synthetic Atlas handbook. All 20 original documents remain private. To reproduce this optional setup with local database operator access, run `make portal-setup`; it never publishes historical documents. See [final French handover](docs/FINAL_DELIVERY_FR.md).
+
+See [API and administrator setup](docs/ENTERPRISE_API.md), [widget/portal installation](docs/WIDGET_INTEGRATION.md), [secure Gemini configuration](docs/GEMINI_CONFIGURATION.md), [French enterprise interview guide](docs/ENTERPRISE_INTERVIEW_FR.md), and [executed verification](docs/TESTING.md).
+
+### Demonstrate the integration locally
+
+```sh
+docker compose up -d --build
+# Only if your personal administrator does not exist:
+docker compose exec backend python -m app.admin_cli
+```
+
+Log in to the admin console, open **Integrations**, publish only the desired synthetic documents, create an integration with exact origin `http://127.0.0.1:8090`, explicitly select those documents and issue a credential. The full secret is displayed once. Put it into the ignored local `.env` as `KNOWLEDGEOS_INTEGRATION_KEY` using a local editor/secret manager; never paste it into chat or browser code. Then inject it into the portal server:
+
+```sh
+docker compose up -d --no-deps --force-recreate intranet
+```
+
+Open the portal, select a fictional persona, open the bottom-right assistant and ask `What is the remote work policy?`. Inspect sources and reload the portal to reopen saved history. Without a configured integration key the portal can load, but its token endpoint fails safely; it does not silently use administrator permissions. With Gemini enabled this returns a genuine grounded answer; without a provider it honestly displays retrieval-only passages. See the Gemini guide for secure configuration and quota limitations.
+
+Existing instances: **do not reseed or reset the database**. Startup applies additive migrations. Existing documents and their vector IDs are preserved and remain admin-only until explicitly published. The portal is a demonstration identity flow, not production SSO.
+
 ## What you can demonstrate
 
 - A live dashboard backed by stored documents, chunks, conversations and executed queries.
 - Real PDF, Markdown and TXT upload → extraction → chunking → local embeddings → Qdrant indexing.
 - A persistent research workspace with conversation create/rename/delete, cited passages, source inspection and retrieval traces.
 - A bottom-right quick-chat assistant on every page: ask without leaving your workspace, inspect cited passages, and continue the saved conversation in Research.
-- Honest **retrieval-only** operation without a paid key; optional OpenAI or Ollama answer generation with a bounded grounding prompt.
+- Honest **retrieval-only** operation without a paid key; optional Gemini, OpenAI or Ollama answer generation with a bounded grounding prompt.
 - Searchable and filterable document grid/list, extracted text preview, duplicate protection, reindexing and vector cleanup.
 - Recorded query volume, latency, retrieved chunk counts and source references. No invented accuracy, cost savings or benchmark claims.
 - A visual architecture explorer, sanitized settings, dark/light themes and responsive layouts.
@@ -37,7 +71,7 @@ The interface references IAWEB.DEV’s blue/navy visual language and displays it
 | Retrieval | LangChain Core + langchain-qdrant + Qdrant | Inspectable vector-store integration and actual cosine search |
 | Embeddings | MiniLM through FastEmbed/ONNX Runtime | Local CPU inference without a large GPU runtime |
 | Extraction | pypdf | Page-aware PDF extraction with a permissive license |
-| Generation | OpenAI or Ollama, configured at runtime | Real model calls when configured; no provider dependency for retrieval |
+| Generation | Gemini, OpenAI or Ollama, configured at runtime | Real model calls when configured; no provider dependency for retrieval |
 | Verification | pytest, HTTPX, Vitest, Testing Library, Playwright | Unit, API, interaction and real browser checks |
 | Runtime | Docker Compose + Nginx | Repeatable local services and persistent volumes |
 
@@ -54,7 +88,7 @@ flowchart LR
   Encoder --> Q[(Qdrant vectors)]
   API <--> Q
   API --> Files[(Original files)]
-  API -. optional .-> LLM[OpenAI / Ollama]
+  API -. optional .-> LLM[Gemini / OpenAI / Ollama]
 ```
 
 ```mermaid
@@ -88,13 +122,16 @@ cp .env.example .env
 docker compose up --build -d
 docker compose logs -f backend
 # In another terminal, after the backend is ready:
+docker compose exec backend python -m app.admin_cli
 python3 scripts/seed.py
 ```
 
-Open **http://localhost:8080**. Backend startup applies Alembic migrations automatically. The first seeded document downloads the local embedding model; allow extra time. The seed script uses the real multipart ingestion endpoint and reports failures. Running it again skips identical files by content hash.
+Open **http://localhost:8080/login** and sign in with the administrator created interactively above. There is no default account. See [administrator setup and security](docs/ADMIN_AUTH.md). CLI seed/evaluation/acceptance now prompt for administrator login.
+
+Backend startup applies Alembic migrations automatically. The first seeded document downloads the local embedding model; allow extra time. The seed script uses the real multipart ingestion endpoint and reports failures. Running it again skips identical files by content hash.
 
 ```sh
-curl http://localhost:8000/api/readiness
+curl http://localhost:8000/api/health
 docker compose ps
 # Stop services, retaining all named volumes:
 docker compose down
@@ -288,7 +325,7 @@ Show the passage that supports a claim, its page/offset metadata, the vector sco
 
 ## Limitations and roadmap
 
-This is a single-user, single-worker demo without authentication or tenant authorization. It is not safe for confidential data or public network exposure. See [SECURITY.md](docs/SECURITY.md) for the data retention boundary and a concrete hardening path.
+This is a single-company, single-worker demo with administrator authentication, scoped integration credentials and employee/document authorization. Multi-tenant isolation is not implemented. It is not safe for confidential data or public network exposure. See [SECURITY.md](docs/SECURITY.md) for the data retention boundary and a concrete hardening path.
 
 Current tradeoffs include synchronous indexing, character-based chunks, dense-only English retrieval, no OCR, non-streaming generation, a small evaluation set, no full history-aware query rewrite and no distributed transaction between SQL and Qdrant. Current lists/analytics suit a demonstration corpus. A production evolution would add authorized retrieval, durable ingestion workers, reconciliation, pagination/SQL aggregates, hybrid search/reranking, tokenizer-aware chunking and a representative human-reviewed evaluation set.
 

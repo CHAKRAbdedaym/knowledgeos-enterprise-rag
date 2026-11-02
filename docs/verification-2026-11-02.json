@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-02",
+  "provenance": "Independent synthetic portfolio reconstruction; not an official IAWEB.DEV deployment",
+  "backend": {
+    "full_suite_passed": 82,
+    "duration_seconds": 255.8,
+    "gemini_enterprise_target_passed": 35
+  },
+  "frontend": {
+    "component_tests_passed": 26,
+    "lint": "passed",
+    "typecheck": "passed",
+    "production_build": "passed",
+    "test_workers": 1,
+    "whole_test_timeout_seconds": 15
+  },
+  "portal_unit_tests_passed": 4,
+  "widget_browser_unit": "passed with mocked transport; separate from live acceptance",
+  "live_acceptance": {
+    "real_ingestion_to_gemini": "passed",
+    "final_employee_portal": "passed",
+    "admin_playground": "passed",
+    "employee_abstention": "passed",
+    "employee_identity_isolation": "passed",
+    "mobile_width_px": 390,
+    "captured_employee_page_errors": []
+  },
+  "gemini": {
+    "model": "gemini-3.5-flash-lite",
+    "model_metadata_http_status": 200,
+    "mode": "grounded",
+    "generation_ms": 1658,
+    "usage": {
+      "promptTokenCount": 966,
+      "candidatesTokenCount": 142,
+      "totalTokenCount": 1108
+    },
+    "attempts": 1,
+    "quota_remaining": "Not exposed by this API; check Google AI Studio",
+    "billing_tier": "Not verified"
+  },
+  "preservation": {
+    "original_documents_unchanged": 20,
+    "original_chunks_unchanged": 100,
+    "original_vector_payloads_and_embeddings_unchanged": 100,
+    "historical_documents_still_admin_only": true,
+    "existing_administrator_unchanged": true,
+    "current_counts": {
+      "documents": 21,
+      "chunks": 103,
+      "admins": 1,
+      "conversations": 4,
+      "messages": 8,
+      "query_logs": 10
+    },
+    "current_qdrant_vectors": 103,
+    "new_synthetic_portal_documents": 1,
+    "new_synthetic_portal_chunks": 3
+  },
+  "limitations": [
+    "No verified billing tier or remaining project quota",
+    "No production SSO or multi-tenant isolation",
+    "English MiniLM retrieval unchanged",
+    "No hosted CI, load benchmark or formal security/accessibility certification",
+    "No GitHub push performed"
+  ]
+}

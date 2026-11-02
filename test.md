@@ -4,7 +4,7 @@
 
 ## Avant de commencer
 
-1. Ouvrir http://localhost:8080 et actualiser la page après le nettoyage de l’historique.
+1. Créer son administrateur si nécessaire selon [ADMIN_AUTH.md](docs/ADMIN_AUTH.md), puis se connecter sur http://localhost:8080/login et ouvrir le workspace.
 2. Aller dans **Research**, puis **New conversation**, ou ouvrir le chatbot en bas à droite.
 3. Si le chatbot conserve une référence à une conversation supprimée, cliquer sur **+** (« Start a new quick chat »). Cela réinitialise sa référence locale.
 4. Garder les réglages de recherche à **5 passages** et **0,30** de seuil pour reproduire les vérifications ci-dessous.

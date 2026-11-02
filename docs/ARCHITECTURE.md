@@ -1,6 +1,6 @@
 # Architecture
 
-KnowledgeOS is a local single-user portfolio reconstruction. Included IAWEB.DEV content is synthetic. It implements a real dense-retrieval pipeline and optional grounded generation, with no claim of a deployed client system.
+KnowledgeOS is a local single-enterprise portfolio reconstruction. Included IAWEB.DEV content is synthetic. It implements a real dense-retrieval pipeline and optional grounded generation, with no claim of a deployed client system.
 
 ```mermaid
 flowchart LR
@@ -11,8 +11,12 @@ flowchart LR
   API --> Encoder[FastEmbed / MiniLM ONNX]
   Encoder --> Q[(Qdrant cosine collection)]
   API <--> Q
-  API -. opt-in .-> LLM[OpenAI or Ollama]
+  API -. opt-in .-> LLM[Gemini / OpenAI / Ollama]
 ```
+
+## Administrator authentication
+
+The first enterprise slice protects existing routes with server-side administrator sessions and CSRF checks. Login, logout, bootstrap, migration and remaining boundaries are documented in [ADMIN_AUTH.md](ADMIN_AUTH.md). Only minimal liveness is anonymous. The integration API/widget are implemented below; live Gemini model access and grounded generation have now been verified (2026-11-02).
 
 ## Ownership boundaries
 
@@ -116,3 +120,56 @@ Readiness means database/schema and vector-service connectivity, not that the em
 Compose starts PostgreSQL, Qdrant, FastAPI and Nginx. Published ports bind only to localhost. Named volumes outlive `docker compose down`. `docker compose down -v` deletes demo data and should be used only when a reset is intended. Backend startup migrations are suitable for one demo replica; deploy migrations as a separate reviewed job for production.
 
 See [SECURITY.md](SECURITY.md) for authorization, privacy, parser isolation and hardening gaps. See [RAG_DEEP_DIVE.md](RAG_DEEP_DIVE.md) for retrieval limitations and evaluation interpretation.
+
+## Enterprise implementation — 2026-11-02
+
+This section supersedes the earlier statement that integration permissions and the widget are future work. The runtime remains one enterprise; multiple integrations are separate clients within that enterprise, not separate tenants.
+
+```mermaid
+sequenceDiagram
+  participant A as Authenticated administrator
+  participant P as Trusted portal backend
+  participant W as Employee widget
+  participant K as KnowledgeOS FastAPI
+  participant S as PostgreSQL
+  participant Q as MiniLM / Qdrant
+  participant G as Optional Gemini
+  A->>K: Publish eligible documents and select integration scope
+  K->>S: Store allowlist, key hash, audit metadata
+  P->>K: Server key + server-verified employee subject + exact origin
+  K->>S: Persist employee and short-lived token hash
+  K-->>P: Opaque five-minute browser token
+  P-->>W: Token only, no permanent secret
+  W->>K: Question + bearer + browser Origin
+  K->>S: Check key/session/employee/conversation/scope
+  K->>Q: Similarity search filtered by authorized document IDs
+  Q-->>K: Candidate chunk IDs and scores
+  K->>S: Rebuild passages from authoritative chunk/document records
+  opt Generation enabled and evidence present
+    K->>G: Bounded prompt with authorized untrusted evidence
+    G-->>K: Structured answer and citation numbers
+  end
+  K->>S: Recheck permissions, save history and redacted query event
+  K-->>W: Answer, execution mode, sources and request ID
+```
+
+### Implementation boundaries
+
+- `auth.py` and `admin_cli.py` retain administrator passwords/sessions/CSRF. Legacy application routes remain administrator-only; employee histories are excluded from legacy conversation APIs.
+- `enterprise.py` owns separate admin integration management and `/api/v1` employee routes. A server key authenticates a trusted portal; only that server attests an employee subject. The demo selector is explicitly not an identity provider.
+- `employee_cors.py` adds exact registered-origin bearer CORS without credentialed browser cookies. Origin checks supplement authentication, never replace it.
+- `runtime.py` merges validated, persisted retrieval/provider preferences with environment configuration. No API accepts provider secrets or arbitrary provider URLs.
+- `gemini.py` implements the official REST adapter, bounded retries, quota handling and safe failures. Live model access and grounded generation were verified with the owner-configured key; remaining quota/billing tier are not exposed by that check. See `GEMINI_CONFIGURATION.md`.
+- `widget/knowledgeos-widget.js` is an independent Shadow DOM web component. `examples/intranet` serves a fictional portal and exchanges short-lived tokens server-side. It uses the same backend answer pipeline, with no canned answers.
+
+### Additive schema and preservation
+
+Migration `0003_enterprise_integrations`, following `0002_admin_auth`, adds integrations, hashed scoped credentials, explicit integration-document joins, employees, widget sessions, security audits and runtime settings. Conversations gain integration/employee ownership; existing rows with both fields null remain admin conversations. Query events gain channel/integration metadata. Existing documents gain `employee_available=false`: historical documents remain private.
+
+The Qdrant payload already contains `metadata.document_id`. Filtered searches therefore require no collection replacement, vector backfill or embedding-model change. SQL source IDs and indexing status are checked again after vector search. The real migration was applied after a PostgreSQL dump and full original-vector snapshot; the original rows and all 100 vector payloads/embeddings were compared unchanged afterward.
+
+### Permission changes and history
+
+Access is the intersection of published, indexed documents and the integration's explicit allowlist. Empty scope denies all. Each source-view request repeats the check. Historical employee messages are withheld when any saved source is no longer permitted; follow-up generation then fails closed too. Scope and credential validity are rechecked after generation before returning content. Revocation cannot retract bytes already received by a browser or provider. Concurrent delivery and revocation do not constitute a distributed transactional confidentiality guarantee.
+
+Detailed route contracts, credential scopes and examples: [Enterprise API](ENTERPRISE_API.md). Widget token and cookie boundaries: [Widget integration](WIDGET_INTEGRATION.md). Actual verification: [Testing](TESTING.md).
